@@ -1,0 +1,343 @@
+@media(max-width:1100px){
+
+    .feature-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .feature-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+@media(max-width:1000px){
+
+.rooms-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.room-large{
+
+min-height:420px;
+
+}
+
+.room-small{
+
+min-height:260px;
+
+}
+
+}
+/* ===========================================
+   STATISTICS RESPONSIVE
+=========================================== */
+
+@media(max-width:1000px){
+
+    .stats-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:650px){
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+/* ===========================================
+   APPLICATION PROCESS RESPONSIVE
+=========================================== */
+
+@media(max-width:768px){
+
+.timeline::before{
+
+left:25px;
+
+}
+
+.timeline-circle{
+
+width:50px;
+
+height:50px;
+
+font-size:20px;
+
+}
+
+.timeline-content{
+
+margin-left:25px;
+
+}
+
+.timeline-content h3{
+
+font-size:22px;
+
+}
+
+.timeline-content p{
+
+font-size:16px;
+
+}
+
+}
+/* ===========================================
+   TESTIMONIALS RESPONSIVE
+=========================================== */
+
+@media(max-width:1100px){
+
+.testimonial-wrapper{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.testimonial-wrapper{
+
+grid-template-columns:1fr;
+
+}
+
+}
+/* ===========================================
+   FOOTER RESPONSIVE
+=========================================== */
+
+@media(max-width:1000px){
+
+.footer-grid{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+}
+
+@media(max-width:700px){
+
+.footer-grid{
+
+grid-template-columns:1fr;
+
+text-align:center;
+
+}
+
+}
+/*==========================================
+CONTACT RESPONSIVE
+===========================================*/
+
+@media(max-width:900px){
+
+.contact-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.contact-form{
+
+padding:35px;
+
+}
+
+}
+@media(max-width:992px){
+
+.account-wrapper{
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.account-right{
+
+padding:40px 20px;
+
+}
+
+.account-box{
+
+padding:40px 25px;
+
+}
+
+.account-nav nav{
+
+gap:18px;
+
+}
+
+.logo{
+
+font-size:24px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.account-nav{
+
+flex-direction:column;
+
+height:auto;
+
+padding:15px 0;
+
+}
+
+.account-navbar{
+
+height:auto;
+
+padding:10px 0;
+
+}
+
+.account-wrapper{
+
+padding-top:120px;
+
+}
+
+.account-nav nav{
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+}
+.account-box{
+
+animation:fadeUp .8s ease;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+}
+/*==============================
+ACCOUNT NAVBAR
+==============================*/
+
+.menu-toggle{
+
+display:none;
+
+background:none;
+
+border:none;
+
+font-size:34px;
+
+color:#fff;
+
+cursor:pointer;
+
+}
+
+@media(max-width:992px){
+
+.account-nav{
+
+position:relative;
+
+}
+
+.menu-toggle{
+
+display:block;
+
+}
+
+.account-nav nav{
+
+position:absolute;
+
+top:75px;
+
+left:0;
+
+width:100%;
+
+background:#0d4d83;
+
+display:none;
+
+flex-direction:column;
+
+padding:25px;
+
+border-radius:0 0 20px 20px;
+
+box-shadow:0 20px 40px rgba(0,0,0,.18);
+
+z-index:1000;
+
+}
+
+.account-nav nav.active{
+
+display:flex;
+
+}
+
+.account-nav nav a{
+
+padding:15px 0;
+
+width:100%;
+
+text-align:center;
+
+}
+
+}

@@ -1,0 +1,79 @@
+@model HostelManagementSystem.Models.HostelRoom
+
+@{
+    ViewData["Title"] = "Edit Room";
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-warning">
+            <h3>Edit Hostel Room</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input asp-for="Id" type="hidden"/>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="RoomNumber" class="form-label"></label>
+                    <input asp-for="RoomNumber" class="form-control"/>
+                    <span asp-validation-for="RoomNumber" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label"></label>
+                    <input asp-for="Price" class="form-control"/>
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Capacity" class="form-label"></label>
+                    <input asp-for="Capacity" class="form-control"/>
+                    <span asp-validation-for="Capacity" class="text-danger"></span>
+                </div>
+                          <div class="mb-3">
+
+    <label asp-for="HostelType" class="form-label fw-bold"></label>
+
+    <select asp-for="HostelType" class="form-select">
+
+        <option value="">Select Hostel</option>
+
+        <option>Boys</option>
+
+        <option>Girls</option>
+
+    </select>
+
+    <span asp-validation-for="HostelType" class="text-danger"></span>
+
+
+                <button class="btn btn-warning">
+                    Save Changes
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}

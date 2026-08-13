@@ -1,0 +1,1452 @@
+@model HostelManagementSystem.ViewModels.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_AdminLayout";
+       var greeting = DateTime.Now.Hour switch
+{
+    < 12 => "Good Morning",
+    < 17 => "Good Afternoon",
+    _ => "Good Evening"
+};
+}
+<div class="container-fluid py-4 px-4">
+
+    <div class="card border-0 shadow-lg-lg rounded-5 mb-4 overflow-hidden">
+
+        <div class="card-body p-5 text-white"
+             style="background:linear-gradient(135deg,#0d6efd,#3b82f6);">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+
+                    <h1 class="fw-bold display-6 mb-2">
+
+                        <i class="bi bi-speedometer2 me-2"></i>
+
+                       @greeting, Administrator!
+
+                    </h1>
+
+                    <p class="mb-0 fs-5 opacity-75">
+
+                        Manage students, applications, hostel rooms and payments from one central dashboard.
+
+                    </p>
+
+                </div>
+
+               <div class="dashboard-date">
+                     <span>
+                        @DateTime.Now.ToString("dddd")
+                     </span> 
+
+                     <strong>
+                        @DateTime.Now.ToString("dd MMMM yyyy")
+                     </strong>
+
+               </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card border-0 shadow-lg rounded-5 mb-4">
+
+    <div class="card-header bg-white border-0">
+
+        <h4 class="fw-bold">
+
+            <i class="bi bi-bell-fill text-warning me-2"></i>
+
+            Notifications
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <ul class="list-group list-group-flush">
+
+            <li class="list-group-item d-flex justify-content-between">
+
+                Pending Applications
+
+                <span class="badge bg-warning">
+
+                    @Model.PendingApplications
+
+                </span>
+
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+
+                Unread Messages
+
+                <span class="badge bg-danger">
+
+                    @Model.UnreadMessages
+
+                </span>
+
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+
+                Pending Payments
+
+                <span class="badge bg-success">
+
+                    @Model.PendingPayments
+
+                </span>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+        <!-- Statistics -->
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-lg rounded-5 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <small class="text-muted">Students</small>
+
+                            <h2 class="fw-bold mt-2">@Model.TotalStudents</h2>
+
+                        </div>
+
+                        <div class="bg-primary bg-opacity-10 rounded-circle p-3">
+
+                            <i class="bi bi-people-fill text-primary fs-2"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-lg rounded-5 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <small class="text-muted">Applications</small>
+
+                            <h2 class="fw-bold mt-2">@Model.TotalApplications</h2>
+
+                        </div>
+
+                        <div class="bg-warning bg-opacity-10 rounded-circle p-3">
+
+                            <i class="bi bi-file-earmark-text-fill text-warning fs-2"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-lg rounded-5 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <small class="text-muted">Rooms</small>
+
+                            <h2 class="fw-bold mt-2">@Model.TotalRooms</h2>
+
+                        </div>
+
+                        <div class="bg-success bg-opacity-10 rounded-circle p-3">
+
+                            <i class="bi bi-building-fill text-success fs-2"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-lg rounded-5 h-100">
+
+                <div class="stat-card">
+    <div class="stat-title">Revenue</div>
+
+    <div class="stat-value">
+        @Model.TotalRevenue.ToString("C0")
+    </div>
+
+    <div class="stat-icon bg-info-soft">
+        <i class="bi bi-cash-stack text-info"></i>
+    </div>
+</div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Dashboard Summary -->
+
+<div class="row g-4 mb-4">
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card border-start border-warning border-4 shadow-lg-sm h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <h6 class="text-muted">Pending</h6>
+
+                        <h2 class="fw-bold text-warning">
+
+                            @Model.PendingApplications
+
+                        </h2>
+
+                    </div>
+
+                    <i class="bi bi-hourglass-split fs-1 text-warning"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card border-start border-success border-4 shadow-lg-sm h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <h6 class="text-muted">Approved</h6>
+
+                        <h2 class="fw-bold text-success">
+
+                            @Model.AcceptedApplications
+
+                        </h2>
+
+                    </div>
+
+                    <i class="bi bi-check-circle-fill fs-1 text-success"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card border-start border-danger border-4 shadow-lg-sm h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <h6 class="text-muted">Rejected</h6>
+
+                        <h2 class="fw-bold text-danger">
+
+                            @Model.RejectedApplications
+
+                        </h2>
+
+                    </div>
+
+                    <i class="bi bi-x-circle-fill fs-1 text-danger"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="card border-start border-info border-4 shadow-lg-sm h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+
+                    <div>
+
+                        <h6 class="text-muted">Paid Payments</h6>
+
+                        <h2 class="fw-bold text-info">
+
+                            @Model.TotalPayments
+
+                        </h2>
+
+                    </div>
+
+                    <i class="bi bi-credit-card-fill fs-1 text-info"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Recent Messages -->
+
+<div class="card border-0 shadow-lg rounded-4 mt-4">
+
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center py-4">
+
+        <h4 class="fw-bold mb-0">
+
+            <i class="bi bi-envelope-fill text-primary me-2"></i>
+
+            Recent Messages
+
+        </h4>
+
+        <a asp-controller="ContactMessage"
+           asp-action="Index"
+           class="btn btn-outline-primary btn-sm">
+
+            <i class="bi bi-list-ul"></i>
+
+            View All
+
+        </a>
+
+    </div>
+
+    <div class="card-body p-0">
+
+        @if (Model.RecentMessages.Any())
+        {
+            @foreach (var message in Model.RecentMessages)
+            {
+                <a asp-controller="ContactMessage"
+                   asp-action="Details"
+                   asp-route-id="@message.Id"
+                   class="text-decoration-none text-dark">
+
+                    <div class="d-flex justify-content-between align-items-start px-4 py-3 border-bottom recent-message">
+
+                        <div class="d-flex">
+
+                            <div class="me-3">
+
+                                <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center"
+                                     style="width:50px;height:50px;font-size:20px;">
+
+                                    <i class="bi bi-person-fill"></i>
+
+                                </div>
+
+                            </div>
+
+                            <div>
+
+                                <div class="d-flex align-items-center">
+
+                                    <h6 class="fw-bold mb-0">
+
+                                        @message.FullName
+
+                                    </h6>
+
+                                    @if (!message.IsRead)
+                                    {
+                                        <span class="badge bg-danger ms-2">
+
+                                            New
+
+                                        </span>
+                                    }
+
+                                </div>
+
+                                <small class="text-muted">
+
+                                    @message.Email
+
+                                </small>
+
+                                <div class="mt-2 text-muted">
+
+                                    @(message.Message.Length > 100
+                                        ? message.Message.Substring(0, 100) + "..."
+                                        : message.Message)
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="text-end">
+
+                            <small class="text-muted d-block">
+
+                                @message.DateSent.ToString("dd MMM")
+
+                            </small>
+
+                            <i class="bi bi-chevron-right text-primary mt-2"></i>
+
+                        </div>
+
+                    </div>
+
+                </a>
+            }
+        }
+        else
+        {
+            <div class="text-center py-5">
+
+                <i class="bi bi-envelope-x display-3 text-muted"></i>
+
+                <h5 class="mt-3">
+
+                    No Messages Yet
+
+                </h5>
+
+                <p class="text-muted">
+
+                    New contact messages will appear here.
+
+                </p>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+<style>
+
+.recent-message{
+    transition:.25s;
+    cursor:pointer;
+}
+
+.recent-message:hover{
+    background:#f8f9fa;
+    transform:translateX(6px);
+}
+
+</style>
+<!-- Quick Actions -->
+
+<div class="card border-0 shadow-lg rounded-5 mb-4">
+
+    <div class="card-header bg-white border-0 pt-4">
+
+        <h4 class="fw-bold">
+
+            <i class="bi bi-lightning-charge-fill text-warning me-2"></i>
+
+            Quick Actions
+
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row g-4">
+
+            <div class="col-lg-3 col-md-6">
+
+                <a asp-controller="Student"
+                   asp-action="Index"
+                   class="text-decoration-none">
+
+                    <div class="card border-0 shadow-lg-sm h-100 text-center">
+
+                        <div class="card-body py-4">
+
+                            <i class="bi bi-people-fill display-6 text-primary"></i>
+
+                            <h5 class="mt-3 fw-bold">
+
+                                Students
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                Manage Students
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <a asp-controller="HostelRoom"
+                   asp-action="Index"
+                   class="text-decoration-none">
+
+                    <div class="card border-0 shadow-lg-sm h-100 text-center">
+
+                        <div class="card-body py-4">
+
+                            <i class="bi bi-building-fill display-6 text-success"></i>
+
+                            <h5 class="mt-3 fw-bold">
+
+                                Rooms
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                Manage Rooms
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <a asp-controller="Payment"
+                   asp-action="Index"
+                   class="text-decoration-none">
+
+                    <div class="card border-0 shadow-lg-sm h-100 text-center">
+
+                        <div class="card-body py-4">
+
+                            <i class="bi bi-credit-card-fill display-6 text-info"></i>
+
+                            <h5 class="mt-3 fw-bold">
+
+                                Payments
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                View Payments
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <a asp-controller="Reports"
+                   asp-action="Index"
+                   class="text-decoration-none">
+
+                    <div class="card border-0 shadow-lg-sm h-100 text-center">
+
+                        <div class="card-body py-4">
+
+                            <i class="bi bi-bar-chart-fill display-6 text-danger"></i>
+
+                            <h5 class="mt-3 fw-bold">
+
+                                Reports
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                Generate Reports
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+ <div class="col-lg-3 col-md-6">
+
+    <a asp-controller="ContactMessage"
+       asp-action="Index"
+       class="text-decoration-none">
+
+        <div class="card border-0 shadow-lg-sm h-100 text-center position-relative">
+
+            @if (Model.UnreadMessages > 0)
+            {
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    @Model.UnreadMessages
+                </span>
+            }
+
+            <div class="card-body py-4">
+
+                <i class="bi bi-envelope-fill display-6 text-danger"></i>
+
+                <h5 class="mt-3 fw-bold">
+                    Messages
+                </h5>
+
+                <small class="text-muted">
+
+                    @if (Model.UnreadMessages > 0)
+                    {
+                        <text>@Model.UnreadMessages unread message(s)</text>
+                    }
+                    else
+                    {
+                        <text>No new messages</text>
+                    }
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </a>
+
+</div>
+
+</div>
+<!-- Recent Activity -->
+
+<div class="row">
+
+    <!-- Recent Applications -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card border-0 shadow-lg rounded-5 h-100">
+
+            <div class="card-header bg-primary text-white">
+
+                <h5 class="fw-bold mb-0">
+
+                    <i class="bi bi-file-earmark-text-fill me-2"></i>
+
+                    Recent Applications
+
+                </h5>
+
+            </div>
+
+            <div class="card-body p-0">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Student</th>
+
+                            <th>Room</th>
+
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.RecentApplications)
+                        {
+                            <tr>
+
+                                <td>@item.Student.FullName</td>
+
+                                <td>@item.HostelRoom.RoomNumber</td>
+
+                                <td>
+
+                                    @if(item.Status=="Accepted")
+                                    {
+                                        <span class="badge bg-success">
+
+                                            Accepted
+
+                                        </span>
+                                    }
+                                    else if(item.Status=="Pending")
+                                    {
+                                        <span class="badge bg-warning text-dark">
+
+                                            Pending
+
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+
+                                            Rejected
+
+                                        </span>
+                                    }
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Recent Payments -->
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card border-0 shadow-lg rounded-5 h-100">
+
+            <div class="card-header bg-success text-white">
+
+                <h5 class="fw-bold mb-0">
+
+                    <i class="bi bi-credit-card-fill me-2"></i>
+
+                    Recent Payments
+
+                </h5>
+
+            </div>
+
+            <div class="card-body p-0">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Student</th>
+
+                            <th>Amount</th>
+
+                            <th>Date</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var payment in Model.RecentPayments)
+                        {
+                            <tr>
+
+                                <td>@payment.HostelApplication.Student.FullName</td>
+
+                                <td>
+
+                                    ₦@payment.Amount.ToString("N2")
+
+                                </td>
+
+                                <td>
+
+                                    @payment.PaymentDate.ToString("dd MMM yyyy")
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Room Occupancy -->
+
+<div class="col-lg-8 mb-4">
+
+    <div class="card border-0 shadow-lg rounded-5">
+
+        <div class="card-header bg-info text-white">
+
+            <h5 class="fw-bold mb-0">
+
+                <i class="bi bi-building-fill-check me-2"></i>
+
+                Hostel Occupancy
+
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            @{
+                var occupiedBeds = Model.OccupiedBeds;
+                var totalBeds = Model.TotalBedSpace;
+                var availableBeds = Model.AvailableRooms;
+
+                var percent = totalBeds == 0
+                    ? 0
+                    : (occupiedBeds * 100 / totalBeds);
+            }
+
+            <div class="d-flex justify-content-between mb-2">
+
+                <strong>Occupied Beds</strong>
+
+                <strong>@occupiedBeds / @totalBeds</strong>
+
+            </div>
+
+            <div class="progress mb-4" style="height:25px;">
+
+                <div class="progress-bar bg-success"
+                     role="progressbar"
+                     style="width:@percent%">
+
+                    @percent%
+
+                </div>
+
+            </div>
+
+            <div class="row text-center">
+
+                <div class="col-md-3">
+
+                    <h4 class="text-primary">
+
+                        @Model.TotalRooms
+
+                    </h4>
+
+                    <small>Total Rooms</small>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <h4 class="text-info">
+
+                        @totalBeds
+
+                    </h4>
+
+                    <small>Total Beds</small>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <h4 class="text-success">
+
+                        @availableBeds
+
+                    </h4>
+
+                    <small>Available Beds</small>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <h4 class="text-danger">
+
+                        @occupiedBeds
+
+                    </h4>
+
+                    <small>Occupied Beds</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row">
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card border-0 shadow-lg rounded-5">
+
+            <div class="card-header bg-primary text-white">
+
+                <h5 class="fw-bold mb-0">
+
+                    <i class="bi bi-pie-chart-fill me-2"></i>
+
+                    Application Statistics
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="applicationChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+        <div class="card border-0 shadow-lg rounded-5">
+
+            <div class="card-header bg-success text-white">
+
+                <h5 class="fw-bold mb-0">
+
+                    <i class="bi bi-bar-chart-fill me-2"></i>
+
+                    Revenue Overview
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <canvas id="revenueChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    <!-- System Status -->
+
+    <div class="col-lg-4 mb-4">
+
+        <div class="card border-0 shadow-lg rounded-5">
+
+            <div class="card-header bg-dark text-white">
+
+                <h5 class="fw-bold mb-0">
+
+                    <i class="bi bi-cpu-fill me-2"></i>
+
+                    System Status
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <p>
+
+                    <span class="badge bg-success">
+
+                        Online
+
+                    </span>
+
+                    Database Connected
+
+                </p>
+
+                <p>
+
+                    <span class="badge bg-success">
+
+                        Active
+
+                    </span>
+
+                    Payment Gateway
+
+                </p>
+
+                <p>
+
+                    <span class="badge bg-success">
+
+                        Running
+
+                    </span>
+
+                    Hostel Management System
+
+                </p>
+
+                <hr>
+
+                <small class="text-muted">
+
+                    Logged in as Administrator
+
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+@section Scripts{
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const applicationChart = new Chart(document.getElementById('applicationChart'), {
+
+    type:'doughnut',
+
+    data:{
+
+        labels:['Accepted','Pending','Rejected'],
+
+        datasets:[{
+
+            data:[
+                @Model.AcceptedApplications,
+                @Model.PendingApplications,
+                @Model.RejectedApplications
+            ],
+
+            backgroundColor:[
+                '#198754',
+                '#ffc107',
+                '#dc3545'
+            ]
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        plugins:{
+
+            legend:{
+                position:'bottom'
+            }
+
+        }
+
+    }
+
+});
+
+const revenueChart = new Chart(document.getElementById('revenueChart'),{
+
+    type:'bar',
+
+    data:{
+
+        labels:['Revenue'],
+
+        datasets:[{
+
+            label:'₦',
+
+            data:[@Model.TotalRevenue],
+
+            backgroundColor:'#0d6efd'
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        scales:{
+
+            y:{
+                beginAtZero:true
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+}
+<style>
+
+body{
+    background:#f4f7fb;
+}
+
+/* ===== Cards ===== */
+
+.card{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    transition:.35s;
+    background:#fff;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 45px rgba(0,0,0,.08);
+}
+
+.card-header{
+    border:none;
+    background:#fff;
+    font-weight:700;
+    font-size:1.2rem;
+}
+
+/* ===== Hero ===== */
+
+.hero-card{
+    background:linear-gradient(135deg,#0d6efd,#3b82f6);
+    color:#fff;
+    border-radius:25px;
+    padding:45px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero-card h1{
+    font-size:2.3rem;
+    font-weight:700;
+}
+
+.hero-card p{
+    color:rgba(255,255,255,.85);
+    font-size:1.05rem;
+}
+
+.hero-icon{
+    position:absolute;
+    right:45px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:90px;
+    opacity:.20;
+}
+
+/* ===== Statistics ===== */
+
+.stat-card{
+    position:relative;
+    padding:25px;
+    min-height:150px;
+}
+
+.stat-title{
+    font-size:15px;
+    color:#6c757d;
+    margin-bottom:12px;
+    font-weight:600;
+}
+
+.stat-value{
+    font-size:2.2rem;
+    font-weight:700;
+    color:#212529;
+}
+
+.stat-icon{
+    position:absolute;
+    right:22px;
+    top:22px;
+    width:72px;
+    height:72px;
+    border-radius:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:32px;
+}
+
+.stat-icon i{
+    font-size:30px;
+}
+
+.bg-primary-soft{
+    background:#eaf2ff;
+}
+
+.bg-success-soft{
+    background:#e8f8f0;
+}
+
+.bg-warning-soft{
+    background:#fff6df;
+}
+
+.bg-danger-soft{
+    background:#ffe8eb;
+}
+
+.bg-info-soft{
+    background:#e7f8fc;
+}
+
+/* Colored top border */
+
+.border-primary{
+    border-top:5px solid #0d6efd!important;
+}
+
+.border-success{
+    border-top:5px solid #198754!important;
+}
+
+.border-warning{
+    border-top:5px solid #ffc107!important;
+}
+
+.border-danger{
+    border-top:5px solid #dc3545!important;
+}
+
+.border-info{
+    border-top:5px solid #0dcaf0!important;
+}
+
+/* ===== Quick Actions ===== */
+
+.action-card{
+    border-radius:20px;
+    padding:35px 20px;
+    text-align:center;
+    transition:.35s;
+    background:#fff;
+    border:1px solid #edf2f7;
+    height:100%;
+}
+
+.action-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(0,0,0,.10);
+}
+
+.action-icon{
+    width:80px;
+    height:80px;
+    border-radius:22px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:auto;
+    color:#fff;
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+/* ===== Tables ===== */
+
+.table{
+    margin-bottom:0;
+}
+
+.table thead{
+    background:#f8f9fa;
+}
+
+.table th{
+    font-weight:700;
+    color:#495057;
+    border:none;
+}
+
+.table td{
+    border-color:#f1f1f1;
+    vertical-align:middle;
+}
+
+/* ===== Badges ===== */
+
+.badge{
+    border-radius:30px;
+    padding:8px 16px;
+    font-size:.82rem;
+    font-weight:600;
+}
+
+/* ===== Buttons ===== */
+
+.btn{
+    border-radius:12px;
+    padding:10px 18px;
+    font-weight:600;
+}
+
+/* ===== Timeline ===== */
+
+.timeline{
+    position:relative;
+    margin-left:20px;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    left:18px;
+    width:3px;
+    height:100%;
+    background:#dee2e6;
+}
+
+.timeline-item{
+    display:flex;
+    gap:20px;
+    margin-bottom:30px;
+    position:relative;
+}
+
+.timeline-icon{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    position:relative;
+    z-index:2;
+}
+
+/* ===== Responsive ===== */
+
+@@media(max-width:768px){
+
+.hero-card{
+padding:30px;
+text-align:center;
+}
+
+.hero-icon{
+position:static;
+transform:none;
+display:block;
+margin-top:20px;
+font-size:70px;
+}
+
+.stat-value{
+font-size:1.8rem;
+}
+
+.action-card{
+margin-bottom:20px;
+}
+
+}
+
+</style>

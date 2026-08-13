@@ -1,0 +1,230 @@
+@model IEnumerable<HostelManagementSystem.Models.HostelRoom>
+
+@{
+    ViewData["Title"] = "Available Rooms";
+}
+
+<!-- ==========================================
+     ROOMS PAGE HEADER
+========================================== -->
+
+<section class="rooms-page-header">
+
+    <div class="container">
+
+        <div class="text-center">
+
+            <span class="rooms-page-badge">
+                <i class="bi bi-building me-1"></i>
+                HOSTEL ACCOMMODATION
+            </span>
+
+            <h1 class="rooms-page-title">
+                Available Rooms
+            </h1>
+
+            <p class="rooms-page-subtitle">
+                Explore the rooms currently available for accommodation.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     AVAILABLE ROOMS
+========================================== -->
+
+<section class="available-rooms-section">
+
+    <div class="container">
+
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4">
+
+                @foreach (var room in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="public-room-card">
+
+                            <!-- ROOM ICON -->
+
+                            <div class="public-room-icon">
+
+                                <i class="bi bi-door-open-fill"></i>
+
+                            </div>
+
+
+                            <!-- ROOM INFORMATION -->
+
+                            <div class="public-room-content">
+
+                                <div class="d-flex justify-content-between align-items-start">
+
+                                    <div>
+
+                                        <span class="public-room-label">
+                                            ROOM
+                                        </span>
+
+                                        <h3 class="public-room-number">
+                                            @room.RoomNumber
+                                        </h3>
+
+                                    </div>
+
+                                    <span class="public-room-status">
+
+                                        <i class="bi bi-check-circle-fill me-1"></i>
+
+                                        Available
+
+                                    </span>
+
+                                </div>
+
+
+                                <!-- HOSTEL TYPE -->
+
+                                <div class="public-room-detail">
+
+                                    <i class="bi bi-house-door-fill"></i>
+
+                                    <div>
+
+                                        <small>
+                                            Hostel Type
+                                        </small>
+
+                                        <strong>
+                                            @room.HostelType
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- CAPACITY -->
+
+                                <div class="public-room-detail">
+
+                                    <i class="bi bi-people-fill"></i>
+
+                                    <div>
+
+                                        <small>
+                                            Capacity
+                                        </small>
+
+                                        <strong>
+                                            @room.Capacity student(s)
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- AVAILABLE SPACE -->
+
+                                <div class="public-room-detail">
+
+                                    <i class="bi bi-person-check-fill"></i>
+
+                                    <div>
+
+                                        <small>
+                                            Available Space
+                                        </small>
+
+                                        <strong>
+                                            @room.AvailableSpace space(s)
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- PRICE -->
+
+                                <div class="public-room-price">
+
+                                    <small>
+                                        Accommodation Fee
+                                    </small>
+
+                                    <strong>
+                                        ₦@room.Price.ToString("N2")
+                                    </strong>
+
+                                </div>
+
+
+                                <!-- APPLY BUTTON -->
+
+                                <a asp-controller="Account"
+                                   asp-action="Register"
+                                   class="public-room-button">
+
+                                    Apply for this Room
+
+                                    <i class="bi bi-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            <!-- ==========================================
+                 NO AVAILABLE ROOMS
+            =========================================== -->
+
+            <div class="no-rooms-container">
+
+                <div class="no-rooms-icon">
+
+                    <i class="bi bi-building-x"></i>
+
+                </div>
+
+                <h3>
+                    No Rooms Available
+                </h3>
+
+                <p>
+                    There are currently no rooms available for accommodation.
+                    Please check again later.
+                </p>
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="btn btn-primary">
+
+                    <i class="bi bi-arrow-left me-1"></i>
+
+                    Back to Home
+
+                </a>
+
+            </div>
+        }
+
+    </div>
+
+</section>

@@ -1,0 +1,59 @@
+@model HostelManagementSystem.Models.Student
+
+@{
+ViewData["Title"]="Delete Student";
+Layout="_AdminLayout";
+}
+
+<div class="container mt-5">
+
+<div class="card border-danger shadow">
+
+<div class="card-header bg-danger text-white">
+
+<h3>
+
+<i class="bi bi-trash"></i>
+
+Delete Student
+
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<p>
+
+Are you sure you want to delete
+
+<strong>@Model.FullName</strong>?
+
+</p>
+
+<form asp-action="Delete">
+
+@Html.AntiForgeryToken()
+
+<input asp-for="Id" type="hidden"/>
+
+<button class="btn btn-danger">
+
+Delete
+
+</button>
+
+<a asp-action="Index"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>

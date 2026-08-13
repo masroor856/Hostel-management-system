@@ -1,0 +1,678 @@
+@model IEnumerable<HostelManagementSystem.Models.HostelRoom>
+
+@{
+    ViewData["Title"] = "Room Management";
+    Layout = "_AdminLayout";
+
+    var totalRooms = Model.Count();
+    var availableRooms = Model.Count(r => r.IsAvailable);
+    var fullRooms = Model.Count(r => !r.IsAvailable);
+
+    var totalBeds = Model.Sum(r => r.Capacity);
+    var occupiedBeds = Model.Sum(r => r.OccupiedSpace);
+    var availableBeds = totalBeds - occupiedBeds;
+
+    var boysRooms = Model.Count(r => r.HostelType == "Boys");
+    var girlsRooms = Model.Count(r => r.HostelType == "Girls");
+}
+
+<div class="container-fluid mt-4">
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+
+                <i class="bi bi-building floating-icon me-2"></i>
+
+                Room Management
+
+            </h2>
+
+            <p class="text-muted mb-0">
+                Manage hostel rooms, categories, occupancy and availability.
+            </p>
+        </div>
+
+        <div class="d-flex gap-2">
+
+            <a asp-action="Create"
+               class="btn btn-success">
+
+                <i class="bi bi-plus-circle me-1"></i>
+
+                Add Room
+
+            </a>
+
+            <a asp-controller="AdminDashboard"
+               asp-action="Index"
+               class="btn btn-outline-secondary">
+
+                <i class="bi bi-speedometer2 me-1"></i>
+
+                Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ROOM STATISTICS
+    ========================== -->
+
+    <div class="row g-3 mb-4">
+
+        <!-- TOTAL ROOMS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-building fs-2 text-primary"></i>
+
+                    <h6 class="text-muted mt-2 mb-1">
+                        Total Rooms
+                    </h6>
+
+                    <h2 class="fw-bold mb-0">
+                        @totalRooms
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL BEDS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-grid-3x3-gap-fill fs-2 text-primary"></i>
+
+                    <h6 class="text-muted mt-2 mb-1">
+                        Total Beds
+                    </h6>
+
+                    <h2 class="fw-bold text-primary mb-0">
+                        @totalBeds
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- OCCUPIED BEDS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-person-fill fs-2 text-danger"></i>
+
+                    <h6 class="text-muted mt-2 mb-1">
+                        Occupied Beds
+                    </h6>
+
+                    <h2 class="fw-bold text-danger mb-0">
+                        @occupiedBeds
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AVAILABLE BEDS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-person-check-fill fs-2 text-success"></i>
+
+                    <h6 class="text-muted mt-2 mb-1">
+                        Available Beds
+                    </h6>
+
+                    <h2 class="fw-bold text-success mb-0">
+                        @availableBeds
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FULL ROOMS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-building-fill-exclamation fs-2 text-danger"></i>
+
+                    <h6 class="text-muted mt-2 mb-1">
+                        Full Rooms
+                    </h6>
+
+                    <h2 class="fw-bold text-danger mb-0">
+                        @fullRooms
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AVAILABLE ROOMS -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-building-check fs-2 text-success"></i>
+
+                    <h6 class="text-muted mt-2 mb-1">
+                        Available Rooms
+                    </h6>
+
+                    <h2 class="fw-bold text-success mb-0">
+                        @availableRooms
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOYS HOSTEL -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-gender-male fs-2 text-primary"></i>
+
+                    <h6 class="text-muted mt-2 mb-1">
+                        Boys Hostel
+                    </h6>
+
+                    <h2 class="fw-bold text-primary mb-0">
+                        @boysRooms
+                    </h2>
+
+                    <small class="text-muted">
+                        Rooms
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- GIRLS HOSTEL -->
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-gender-female fs-2 text-danger"></i>
+
+                    <h6 class="text-muted mt-2 mb-1">
+                        Girls Hostel
+                    </h6>
+
+                    <h2 class="fw-bold text-danger mb-0">
+                        @girlsRooms
+                    </h2>
+
+                    <small class="text-muted">
+                        Rooms
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         SEARCH & FILTER
+    ========================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+            <form asp-action="Index"
+                  method="get">
+
+                <div class="row g-2">
+
+                    <div class="col-md-5">
+
+                        <input type="text"
+                               name="search"
+                               value="@Context.Request.Query["search"]"
+                               class="form-control"
+                               placeholder="Search room number..." />
+
+                    </div>
+
+
+                    <div class="col-md-3">
+
+                        <select name="status"
+                                class="form-select">
+
+                            <option value="">
+                                All Status
+                            </option>
+
+                            <option value="Available">
+                                Available
+                            </option>
+
+                            <option value="Full">
+                                Full
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-2">
+
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+
+                            <i class="bi bi-search me-1"></i>
+
+                            Search
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="col-md-2">
+
+                        <a asp-action="Index"
+                           class="btn btn-secondary w-100">
+
+                            <i class="bi bi-arrow-clockwise me-1"></i>
+
+                            Reset
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ROOM LIST
+    ========================== -->
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-dark text-white">
+
+            <h5 class="mb-0">
+
+                <i class="bi bi-list-ul me-2"></i>
+
+                Room List
+
+            </h5>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>
+                            Room
+                        </th>
+
+                        <th>
+                            Hostel Category
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Capacity
+                        </th>
+
+                        <th>
+                            Occupied
+                        </th>
+
+                        <th>
+                            Available
+                        </th>
+
+                        <th>
+                            Occupancy
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th class="text-center">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @if (Model.Any())
+                    {
+
+                        foreach (var room in Model)
+                        {
+
+                            var percent = room.Capacity == 0
+                                ? 0
+                                : (room.OccupiedSpace * 100 / room.Capacity);
+
+
+                            <tr>
+
+                                <!-- ROOM NUMBER -->
+
+                                <td>
+
+                                    <strong>
+                                        @room.RoomNumber
+                                    </strong>
+
+                                </td>
+
+
+                                <!-- HOSTEL CATEGORY -->
+
+                                <td>
+
+                                    @if (room.HostelType == "Boys")
+                                    {
+
+                                        <span class="badge bg-primary">
+
+                                            <i class="bi bi-gender-male me-1"></i>
+
+                                            Boys
+
+                                        </span>
+
+                                    }
+                                    else if (room.HostelType == "Girls")
+                                    {
+
+                                        <span class="badge bg-danger">
+
+                                            <i class="bi bi-gender-female me-1"></i>
+
+                                            Girls
+
+                                        </span>
+
+                                    }
+                                    else
+                                    {
+
+                                        <span class="badge bg-secondary">
+
+                                            @room.HostelType
+
+                                        </span>
+
+                                    }
+
+                                </td>
+
+
+                                <!-- PRICE -->
+
+                                <td>
+
+                                    <span class="fw-bold text-success">
+
+                                        ₦@room.Price.ToString("N2")
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- CAPACITY -->
+
+                                <td>
+                                    @room.Capacity
+                                </td>
+
+
+                                <!-- OCCUPIED -->
+
+                                <td>
+
+                                    <span class="text-danger fw-semibold">
+
+                                        @room.OccupiedSpace
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- AVAILABLE -->
+
+                                <td>
+
+                                    <span class="text-success fw-semibold">
+
+                                        @room.AvailableSpace
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- OCCUPANCY -->
+
+                                <td style="min-width: 180px;">
+
+                                    <div class="progress"
+                                         style="height: 20px;">
+
+                                        <div class="progress-bar"
+                                             role="progressbar"
+                                             style="width:@percent%;">
+
+                                            @percent%
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    @if (room.IsAvailable)
+                                    {
+
+                                        <span class="badge bg-success">
+
+                                            <i class="bi bi-check-circle me-1"></i>
+
+                                            Available
+
+                                        </span>
+
+                                    }
+                                    else
+                                    {
+
+                                        <span class="badge bg-danger">
+
+                                            <i class="bi bi-x-circle me-1"></i>
+
+                                            Full
+
+                                        </span>
+
+                                    }
+
+                                </td>
+
+
+                                <!-- ACTIONS -->
+
+                                <td class="text-center">
+
+                                    <div class="d-flex justify-content-center gap-1">
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@room.Id"
+                                           class="btn btn-info btn-sm">
+
+                                            <i class="bi bi-eye"></i>
+
+                                            View
+
+                                        </a>
+
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@room.Id"
+                                           class="btn btn-warning btn-sm">
+
+                                            <i class="bi bi-pencil-square"></i>
+
+                                            Edit
+
+                                        </a>
+
+
+                                        <a asp-action="Delete"
+                                           asp-route-id="@room.Id"
+                                           class="btn btn-danger btn-sm">
+
+                                            <i class="bi bi-trash"></i>
+
+                                            Delete
+
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        }
+
+                    }
+                    else
+                    {
+
+                        <tr>
+
+                            <td colspan="9"
+                                class="text-center py-5">
+
+                                <i class="bi bi-building fs-1 text-muted"></i>
+
+                                <h5 class="text-muted mt-3">
+                                    No rooms found.
+                                </h5>
+
+                                <p class="text-muted mb-0">
+                                    Create a room to see it listed here.
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

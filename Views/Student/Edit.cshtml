@@ -1,0 +1,110 @@
+@model HostelManagementSystem.Models.Student
+
+@{
+    ViewData["Title"]="Edit Student";
+    Layout="_AdminLayout";
+}
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-warning">
+
+<h3>
+
+<i class="bi bi-pencil-square"></i>
+
+Edit Student
+
+</h3>
+
+</div>
+
+<div class="card-body">
+
+<form asp-action="Edit">
+
+@Html.AntiForgeryToken()
+
+<input asp-for="Id" type="hidden"/>
+
+<div class="mb-3">
+
+<label asp-for="FullName"></label>
+
+<input asp-for="FullName" class="form-control"/>
+
+</div>
+
+<div class="mb-3">
+
+<label asp-for="Email"></label>
+
+<input asp-for="Email" class="form-control"/>
+
+</div>
+<div class="mb-3">
+
+<label asp-for="PhoneNumber"></label>
+
+<input asp-for="PhoneNumber" class="form-control"/>
+
+</div>
+
+<div class="mb-3">
+
+    <label asp-for="Gender" class="form-label"></label>
+
+    <select asp-for="Gender" class="form-select">
+
+        <option>Male</option>
+        <option>Female</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+
+<div class="mb-3">
+
+    <label asp-for="Department" class="form-label"></label>
+
+    <select asp-for="Department" class="form-select">
+
+        <option>Software / Web Design</option>
+
+        <option>Hardware Engineering</option>
+
+        <option>Plumbing</option>
+
+        <option>Building Technology</option>
+
+        <option>Electrical Installation</option>
+
+    </select>
+
+    <span asp-validation-for="Department" class="text-danger"></span>
+
+</div>
+<button class="btn btn-warning">
+
+<i class="bi bi-save"></i>
+
+Save Changes
+
+</button>
+
+<a asp-action="Index"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>

@@ -1,0 +1,355 @@
+@model IEnumerable<HostelManagementSystem.Models.Student>
+
+@{
+    ViewData["Title"] = "Students";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold">
+                <i class="bi bi-people-fill text-primary me-2"></i>
+                Student Management
+            </h2>
+
+            <p class="text-muted mb-0">
+                Manage all registered students.
+            </p>
+        </div>
+
+    </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2>
+            <i class="bi bi-people-fill text-primary"></i>
+            Students
+        </h2>
+
+        <p class="text-muted">
+            Registered students
+        </p>
+
+    </div>
+
+    <form asp-action="Index"
+          method="get"
+          class="d-flex">
+
+        <input type="text"
+               name="search"
+               value="@Context.Request.Query["search"]"
+               class="form-control me-2"
+               placeholder="Search student..." />
+
+        <button class="btn btn-primary">
+
+            <i class="bi bi-search"></i>
+
+        </button>
+
+    </form>
+
+</div>
+    <!-- Statistics -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 bg-primary text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-people-fill display-4"></i>
+
+                    <h5 class="mt-2">
+                        Total Students
+                    </h5>
+
+                    <h2>@Model.Count()</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 bg-success text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-house-check-fill display-4"></i>
+
+                    <h5 class="mt-2">
+                        Allocated Rooms
+                    </h5>
+
+                    <h2>
+                        @Model.Count(s => s.RoomAllocation != null)
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 bg-warning text-dark">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-hourglass-split display-4"></i>
+
+                    <h5 class="mt-2">
+                        Waiting Allocation
+                    </h5>
+
+                    <h2>
+                        @Model.Count(s => s.RoomAllocation == null)
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Student Table -->
+
+ <div class="table-responsive">
+
+    <table class="table table-hover align-middle mb-0" id="studentTable">
+
+        <thead class="table-primary">
+
+            <tr>
+
+                <th>Student</th>
+
+                <th>Email</th>
+
+                <th>Department</th>
+
+                <th>Room</th>
+
+                <th>Status</th>
+
+                <th class="text-center">Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        @foreach (var student in Model)
+        {
+            var application = student.HostelApplications?.FirstOrDefault();
+
+            <tr>
+
+                <!-- STUDENT -->
+                <td>
+
+                    <div class="d-flex align-items-center">
+
+                        <img src="@(string.IsNullOrEmpty(student.ProfilePicture)
+                            ? "/images/default-user.png"
+                            : student.ProfilePicture)"
+                             class="rounded-circle me-2"
+                             width="45"
+                             height="45"
+                             style="object-fit: cover;"
+                             alt="@student.FullName" />
+
+                        <span>
+
+                            @student.FullName
+
+                        </span>
+
+                    </div>
+
+                </td>
+
+
+                <!-- EMAIL -->
+                <td>
+
+                    @student.Email
+
+                </td>
+
+
+                <!-- DEPARTMENT -->
+                <td>
+
+                    <span class="badge bg-info text-dark">
+
+                        @student.Department
+
+                    </span>
+
+                </td>
+
+
+                <!-- ROOM -->
+                <td>
+
+                    @(student.RoomAllocation?.HostelRoom?.RoomNumber
+                        ?? "Not Allocated")
+
+                </td>
+
+
+                <!-- STATUS -->
+                <td>
+
+                    @if (application != null)
+                    {
+                        if (application.Status == "Accepted")
+                        {
+                            <span class="badge bg-success">
+
+                                Accepted
+
+                            </span>
+                        }
+                        else if (application.Status == "Pending")
+                        {
+                            <span class="badge bg-warning text-dark">
+
+                                Pending
+
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+
+                                @application.Status
+
+                            </span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">
+
+                            No Application
+
+                        </span>
+                    }
+
+                </td>
+
+
+                <!-- ACTIONS -->
+                <td class="text-center">
+
+                    <div class="d-flex justify-content-center gap-1">
+
+                        <a asp-action="Details"
+                           asp-route-id="@student.Id"
+                           class="btn btn-info btn-sm">
+
+                            <i class="bi bi-eye"></i>
+
+                            View
+
+                        </a>
+
+
+                        <a asp-action="Edit"
+                           asp-route-id="@student.Id"
+                           class="btn btn-warning btn-sm">
+
+                            <i class="bi bi-pencil-square"></i>
+
+                            Edit
+
+                        </a>
+
+
+                        <a asp-action="Delete"
+                           asp-route-id="@student.Id"
+                           class="btn btn-danger btn-sm">
+
+                            <i class="bi bi-trash"></i>
+
+                            Delete
+
+                        </a>
+
+                    </div>
+
+                </td>
+
+            </tr>
+        }
+
+        </tbody>
+
+    </table>
+
+</div>
+    <nav class="mt-4">
+
+    <ul class="pagination justify-content-center">
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-search="@ViewBag.Search">
+
+                    @i
+
+                </a>
+
+            </li>
+        }
+
+    </ul>
+
+</nav>
+
+</div>
+
+@section Scripts{
+
+<script>
+
+document.getElementById("studentSearch").addEventListener("keyup", function () {
+
+    var value = this.value.toLowerCase();
+
+    var rows = document.querySelectorAll("#studentTable tbody tr");
+
+    rows.forEach(function(row){
+
+        row.style.display =
+            row.innerText.toLowerCase().includes(value)
+            ? ""
+            : "none";
+
+    });
+
+});
+
+</script>
+
+}

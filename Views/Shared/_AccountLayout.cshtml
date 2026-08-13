@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1" />
+
+    <title>@ViewData["Title"] | Hostel Management System</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/home.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/animation.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/responsive.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/HostelManagementSystem.styles.css"
+          asp-append-version="true" />
+
+</head>
+
+<body class="account-body">
+    <!-- =========================================
+PAGE LOADER
+========================================= -->
+
+<div id="page-loader">
+
+    <div class="loader-wrapper">
+
+        <div class="loader-logo">
+
+            <div class="loader-circle">
+
+                <i class="bi bi-buildings-fill"></i>
+
+            </div>
+
+        </div>
+
+        <h2 class="loader-title">
+            Hostel Management System
+        </h2>
+
+        <p id="loader-message">
+
+            Preparing Hostel Management System...
+
+        </p>
+
+        <div class="loader-progress">
+
+            <div class="loader-progress-bar"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================
+PAGE TRANSITION
+========================================= -->
+
+<div id="page-transition"></div>
+
+<header class="account-navbar">
+
+    <div class="container">
+
+        <div class="account-nav">
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="logo">
+
+                <i class="bi bi-buildings-fill"></i>
+
+                HostelMS
+
+            </a>
+
+            <button class="menu-toggle"
+                    id="menuToggle">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+            <nav id="accountMenu">
+
+                <a asp-controller="Home"
+                   asp-action="Index">
+
+                    Home
+
+                </a>
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   asp-fragment="features">
+
+                    Features
+
+                </a>
+
+                <a asp-controller="Home"
+                   asp-action="Rooms">
+                    Rooms
+                </a>
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   asp-fragment="contact">
+
+                    Contact
+
+                </a>
+
+                  <a asp-controller="Account"
+                   asp-action="Login"
+                   asp-fragment="login"
+                    class="apply-btn">
+
+                    Login
+
+                </a>
+
+                <a asp-controller="Account"
+                   asp-action="Register"
+                   class="apply-btn">
+
+                    Apply Now
+
+                </a>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</header>
+
+<main>
+
+<div class="account-wrapper">
+
+    <div class="account-left">
+
+        <div class="account-overlay"></div>
+
+        <div class="left-content">
+
+            <h1>
+
+                Hostel Management System
+
+            </h1>
+
+            <p>
+
+                Secure hostel applications,
+                fast room allocation,
+                online payments,
+                and real-time application tracking.
+
+            </p>
+
+            <ul>
+
+                <li><i class="bi bi-check-circle-fill"></i> Secure Authentication</li>
+
+                <li><i class="bi bi-check-circle-fill"></i> Online Hostel Application</li>
+
+                <li><i class="bi bi-check-circle-fill"></i> Instant Room Allocation</li>
+
+                <li><i class="bi bi-check-circle-fill"></i> Secure Payments</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="account-right">
+
+        <div class="account-box">
+
+            @RenderBody()
+
+        </div>
+
+    </div>
+
+</div>
+
+</main>
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div>
+
+                <h3>Hostel Management System</h3>
+
+                <p>
+
+                    A modern hostel allocation platform that simplifies accommodation management for students and administrators.
+
+                </p>
+
+            </div>
+
+            <div>
+
+                <h4>Quick Links</h4>
+
+                <ul>
+
+                    <li>
+                        <a asp-controller="Home" asp-action="Index">
+                            Home
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Home" asp-action="Index" asp-fragment="features">
+                            Features
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Home" asp-action="Rooms">
+                            Hostels
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Home" asp-action="Index" asp-fragment="contact">
+                            Contact
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Home" asp-action="Index" asp-fragment="faq">
+                            FAQ
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div>
+
+                <h4>Services</h4>
+
+                <ul>
+
+                    <li>Hostel Application</li>
+
+                    <li>Room Allocation</li>
+
+                    <li>Online Payment</li>
+
+                    <li>Student Dashboard</li>
+
+                </ul>
+
+            </div>
+
+            <div>
+
+                <h4>Contact</h4>
+
+                <ul>
+
+                    <li>Email</li>
+
+                    <li>ahmadmasroor856@gmail.com</li>
+
+                    <li>+234 7042827492</li>
+
+                    <li>Monday - Friday</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            © @DateTime.Now.Year Hostel Management System.
+            All Rights Reserved.
+
+        </div>
+
+    </div>
+
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="~/js/site.js"
+        asp-append-version="true"></script>
+
+<script src="~/js/home.js"
+        asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

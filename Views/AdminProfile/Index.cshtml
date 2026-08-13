@@ -1,0 +1,211 @@
+@model HostelManagementSystem.ViewModels.AdminProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "My Profile";
+}
+<div class="container-fluid">
+
+    <!-- ==========================================
+         PAGE HEADER
+    =========================================== -->
+
+   <div class="profile-page">
+
+    <div class="profile-page-header">
+
+        <div>
+            <div class="profile-page-title">
+                <i class="bi bi-person-circle"></i>
+                <h2>My Profile</h2>
+            </div>
+
+            <p class="profile-page-subtitle">
+                Manage your administrator information.
+            </p>
+        </div>
+
+        <div class="profile-actions">
+
+            <a asp-controller="AdminProfile"
+               asp-action="Edit"
+               class="profile-btn profile-btn-primary">
+
+                <i class="bi bi-pencil-square"></i>
+                Edit Profile
+
+            </a>
+
+            <a asp-controller="AdminDashboard"
+               asp-action="Index"
+               class="profile-btn profile-btn-secondary">
+
+                <i class="bi bi-arrow-left"></i>
+                Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+         PROFILE CARD
+    =========================================== -->
+
+   <div class="admin-profile-card">
+
+    <div class="admin-profile-content">
+
+        <div class="admin-profile-left">
+
+            <div class="admin-profile-image-wrapper">
+
+                <img src="@(string.IsNullOrWhiteSpace(Model.CurrentProfilePicture)
+                    ? Url.Content("~/images/default-user.png")
+                    : Url.Content(Model.CurrentProfilePicture))"
+                     alt="Administrator Profile Picture"
+                     class="admin-profile-image" />
+
+            </div>
+
+            <div class="admin-profile-name">
+                @Model.FullName
+            </div>
+
+            <span class="admin-profile-role">
+                <i class="bi bi-shield-check"></i>
+                Administrator
+            </span>
+
+        </div>
+
+
+        <div class="admin-profile-info">
+
+            <div class="profile-info-box">
+
+                <div class="profile-info-label">
+                    <i class="bi bi-person"></i>
+                    Full Name
+                </div>
+
+                <p class="profile-info-value">
+                    @Model.FullName
+                </p>
+
+            </div>
+
+
+            <div class="profile-info-box">
+
+                <div class="profile-info-label">
+                    <i class="bi bi-envelope"></i>
+                    Email Address
+                </div>
+
+                <p class="profile-info-value">
+                    @Model.Email
+                </p>
+
+            </div>
+
+
+            <div class="profile-info-box">
+
+                <div class="profile-info-label">
+                    <i class="bi bi-building"></i>
+                    Department
+                </div>
+
+                <p class="profile-info-value">
+                    @(string.IsNullOrWhiteSpace(Model.Department)
+                        ? "Not specified"
+                        : Model.Department)
+                </p>
+
+            </div>
+
+
+            <div class="profile-info-box">
+
+                <div class="profile-info-label">
+                    <i class="bi bi-telephone"></i>
+                    Phone Number
+                </div>
+
+                <p class="profile-info-value">
+                    @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
+                        ? "Not specified"
+                        : Model.PhoneNumber)
+                </p>
+
+            </div>
+
+
+            <div class="profile-info-box full-width">
+
+                <div class="profile-info-label">
+                    <i class="bi bi-geo-alt"></i>
+                    Address
+                </div>
+
+                <p class="profile-info-value">
+                    @(string.IsNullOrWhiteSpace(Model.Address)
+                        ? "Not specified"
+                        : Model.Address)
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- ==========================================
+         ACCOUNT INFORMATION
+    =========================================== -->
+
+   <div class="account-info-card">
+
+    <div class="account-info-title">
+
+        <i class="bi bi-shield-lock"></i>
+
+        Account Information
+
+    </div>
+
+    <div class="account-info-grid">
+
+        <div class="account-info-box">
+
+            <span class="account-info-label">
+                Account Role
+            </span>
+
+            <span class="account-info-value">
+                Administrator
+            </span>
+
+        </div>
+
+        <div class="account-info-box">
+
+            <span class="account-info-label">
+                Account Email
+            </span>
+
+            <span class="account-info-value">
+                @Model.Email
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>

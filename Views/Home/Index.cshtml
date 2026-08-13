@@ -1,0 +1,1015 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<link rel="stylesheet"
+      href="~/css/site.css"
+      asp-append-version="true" />
+
+<link rel="stylesheet"
+      href="~/css/home.css"
+      asp-append-version="true" />
+
+<link rel="stylesheet"
+      href="~/css/animation.css"
+      asp-append-version="true" />
+
+<link rel="stylesheet"
+      href="~/css/responsive.css"
+      asp-append-version="true" />
+<div class="landing-page">
+
+  
+
+    <!-- Hero starts here -->
+   <section id="home" class="hero">
+
+    <div class="hero-shape shape-1"></div>
+    <div class="hero-shape shape-2"></div>
+    <div class="hero-shape shape-3"></div>
+
+    <div class="container hero-content">
+
+        <div class="hero-left">
+
+            <span class="hero-tag">
+                Student Hostel Management System
+            </span>
+
+            <h1>
+                Find Your Perfect
+                <span>Hostel Room</span>
+                Without Stress
+            </h1>
+
+            <p>
+                Apply for hostel accommodation, track your application,
+                make secure payments, and manage your hostel life
+                from one modern platform.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a asp-controller="Account"
+                   asp-action="Register"
+                   class="hero-btn-primary">
+
+                    Apply Now
+
+                </a>
+
+                <a href="#features"
+                   class="hero-btn-secondary">
+
+                    Learn More
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="hero-right">
+
+            <img src="~/images/landing/hostel-hero.png"
+                 alt="Hostel"
+                 class="hero-image"/>
+
+        </div>
+
+    </div>
+
+    <div class="scroll-indicator">
+
+        <span></span>
+
+    </div>
+
+</section>
+<!-- ===================================
+     WHY CHOOSE US
+=================================== -->
+
+<section id="features" class="features reveal-scale">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>WHY CHOOSE US</span>
+
+            <h2>
+
+                Everything You Need
+                In One Platform
+
+            </h2>
+
+            <p>
+
+                Experience a smarter and faster way to apply,
+                pay and manage hostel accommodation.
+
+            </p>
+
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature-box">
+
+                <div class="feature-icon">
+
+                    🏠
+
+                </div>
+
+                <h3>
+
+                    Smart Hostel Allocation
+
+                </h3>
+
+                <p>
+
+                    Students can apply and receive room allocation
+                    without paperwork.
+
+                </p>
+
+            </div>
+
+            <div class="feature-box">
+
+                <div class="feature-icon">
+
+                    💳
+
+                </div>
+
+                <h3>
+
+                    Secure Payments
+
+                </h3>
+
+                <p>
+
+                    Pay hostel fees online with complete security.
+
+                </p>
+
+            </div>
+
+            <div class="feature-box">
+
+                <div class="feature-icon">
+
+                    📱
+
+                </div>
+
+                <h3>
+
+                    Track Applications
+
+                </h3>
+
+                <p>
+
+                    Monitor every stage of your application
+                    in real time.
+
+                </p>
+
+            </div>
+
+            <div class="feature-box">
+
+                <div class="feature-icon">
+
+                    🔒
+
+                </div>
+
+                <h3>
+
+                    Secure Account
+
+                </h3>
+
+                <p>
+
+                    Email verification and password recovery
+                    protect every account.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================
+     HOSTEL SHOWCASE
+=================================== -->
+
+<section id="rooms" class="rooms reveal">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>HOSTEL FACILITIES</span>
+
+            <h2>
+
+                Comfortable Living Spaces
+
+            </h2>
+
+            <p>
+
+                Modern hostel rooms designed for comfort,
+                security and academic success.
+
+            </p>
+
+        </div>
+
+        <div class="rooms-grid">
+
+            <div class="room-large">
+
+                <div class="room-overlay">
+                  <img src="~/images/landing/boys-hostel.png"
+                 alt="Hostel"
+                 class="hero-image"/>  
+
+                    <h2>Male Hostel</h2>
+
+                    <p>
+
+                        Spacious rooms with excellent
+                        learning environment.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="room-small room-one">
+
+                <div class="room-overlay">
+                    <img src="~/images/landing/female-hostel.png"
+                 alt="Hostel"
+                 class="hero-image"/>
+
+                    <h3>Female Hostel</h3>
+
+                </div>
+
+            </div>
+
+            <div class="room-small room-two">
+
+                <div class="room-overlay">
+                    <img src="~/images/landing/reading-lounge.png"
+                 alt="Hostel"
+                 class="hero-image"/>
+
+                    <h3>Reading Lounge</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================
+     STATISTICS
+=================================== -->
+
+<section class="statistics reveal-scale">
+
+    <div class="container">
+
+        <div class="stats-grid">
+
+            <div class="stat-item">
+
+                <h2 class="counter" data-target="2500">0</h2>
+
+                <p>Students Accommodated</p>
+
+            </div>
+
+            <div class="stat-item">
+
+               <h2 class="counter" data-target="120">0</h2>
+
+                <p>Hostel Rooms</p>
+
+            </div>
+
+            <div class="stat-item">
+
+                <h2 class="counter" data-target="98">0</h2>
+
+                <p>Student Satisfaction</p>
+
+            </div>
+
+            <div class="stat-item">
+
+               <h2 class="counter" data-target="24">0</h2>
+
+                <p>Support Available</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================
+     HOW IT WORKS
+=================================== -->
+
+<section class="process reveal-left">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>APPLICATION PROCESS</span>
+
+            <h2>
+
+                Get Your Hostel
+                In Four Easy Steps
+
+            </h2>
+
+            <p>
+
+                Our digital process makes hostel allocation
+                simple, fast and transparent.
+
+            </p>
+
+        </div>
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+
+                <div class="timeline-circle">
+
+                    1
+
+                </div>
+
+                <div class="timeline-content">
+
+                    <h3>Create an Account</h3>
+
+                    <p>
+
+                        Register with your student email and
+                        complete your profile.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="timeline-item">
+
+                <div class="timeline-circle">
+
+                    2
+
+                </div>
+
+                <div class="timeline-content">
+
+                    <h3>Submit Application</h3>
+
+                    <p>
+
+                        Apply for hostel accommodation
+                        directly through the portal.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="timeline-item">
+
+                <div class="timeline-circle">
+
+                    3
+
+                </div>
+
+                <div class="timeline-content">
+
+                    <h3>Make Payment</h3>
+
+                    <p>
+
+                        Pay securely online after your
+                        application has been approved.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="timeline-item">
+
+                <div class="timeline-circle">
+
+                    4
+
+                </div>
+
+                <div class="timeline-content">
+
+                    <h3>Receive Your Room</h3>
+
+                    <p>
+
+                        Instantly receive your hostel
+                        allocation and room information.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================
+     TESTIMONIALS
+=================================== -->
+
+<section class="testimonials reveal-right">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>TESTIMONIALS</span>
+
+            <h2>
+
+                What Students Say
+
+            </h2>
+
+            <p>
+
+                Hear from students who have successfully
+                used our Hostel Management System.
+
+            </p>
+
+        </div>
+
+        <div class="testimonial-wrapper">
+
+            <div class="testimonial">
+
+                <div class="quote">
+
+                    ❝
+
+                </div>
+
+                <p>
+
+                    The application process was very easy.
+                    I received my room allocation without
+                    visiting the school office.
+
+                </p>
+
+                <div class="student">
+
+                    <div class="avatar">
+
+                        A
+
+                    </div>
+
+                    <div>
+
+                        <h4>
+
+                            Adebisi Adeagbo
+
+                        </h4>
+
+                        <span>
+
+                            Computer Science
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="testimonial">
+
+                <div class="quote">
+
+                    ❝
+
+                </div>
+
+                <p>
+
+                    The payment process was smooth and
+                    secure. Everything happened online.
+
+                </p>
+
+                <div class="student">
+
+                    <div class="avatar">
+
+                        J
+
+                    </div>
+
+                    <div>
+
+                        <h4>
+
+                            John Michael
+
+                        </h4>
+
+                        <span>
+
+                            Software Engineering
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="testimonial">
+
+                <div class="quote">
+
+                    ❝
+
+                </div>
+
+                <p>
+
+                    I love the dashboard.
+                    Everything about my hostel
+                    is available in one place.
+
+                </p>
+
+                <div class="student">
+
+                    <div class="avatar">
+
+                        S
+
+                    </div>
+
+                    <div>
+
+                        <h4>
+
+                            Sarah Johnson
+
+                        </h4>
+
+                        <span>
+
+                            Information Technology
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================
+     FAQ
+=================================== -->
+
+<section class="faq reveal-up">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>FAQ</span>
+
+            <h2>
+
+                Frequently Asked Questions
+
+            </h2>
+
+            <p>
+
+                Everything students usually ask about hostel
+                application and accommodation.
+
+            </p>
+
+        </div>
+
+        <div class="faq-container">
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    How do I apply for a hostel?
+
+                    <span class="faq-icon">+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        Register an account, login,
+                        complete your profile and submit
+                        your hostel application online.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    When can I make payment?
+
+                    <span class="faq-icon">+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        Payment becomes available once your
+                        hostel application has been approved.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    Can I change my allocated room?
+
+                    <span class="faq-icon">+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        Room changes depend on hostel
+                        management approval and room availability.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="faq-item">
+
+                <button class="faq-question">
+
+                    Is online payment secure?
+
+                    <span class="faq-icon">+</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    <p>
+
+                        Yes.
+                        Payments are processed through
+                        secure payment gateways.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!--==========================================
+CONTACT
+===========================================-->
+
+<section id="contact" class="contact reveal-scale">
+
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>CONTACT US</span>
+
+            <h2>
+
+                We'd Love To Hear From You
+
+            </h2>
+
+            <p>
+
+                Have questions about hostel accommodation?
+                Send us a message and our support team will
+                respond as soon as possible.
+
+            </p>
+
+        </div>
+
+        <div class="contact-grid">
+
+            <div class="contact-info">
+
+                <h3>
+
+                    Get In Touch
+
+                </h3>
+
+                <p>
+
+                    Our support team is available to assist
+                    students throughout the hostel application
+                    process.
+
+                </p>
+
+                <div class="contact-item">
+
+                    <i class="bi bi-geo-alt-fill"></i>
+
+                    <div>
+
+                        <strong>Address</strong>
+
+                        <p>
+
+                            School Campus,
+                            Student Affairs Office
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="contact-item">
+
+                    <i class="bi bi-envelope-fill"></i>
+
+                    <div>
+
+                        <strong>Hostel</strong>
+
+                        <p>
+
+                          ahmadmasroor856@gmail.com
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="contact-item">
+
+                    <i class="bi bi-telephone-fill"></i>
+
+                    <div>
+
+                        <strong>Phone</strong>
+
+                        <p>
+
+                            +234 7042827492
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <form asp-controller="ContactMessage"
+      asp-action="Send"
+      method="post"
+      class="contact-form">
+
+    @Html.AntiForgeryToken()
+
+    <div class="input-group">
+
+        <input name="FullName"
+               type="text"
+               placeholder="Full Name"
+               required />
+
+    </div>
+
+    <div class="input-group">
+
+        <input name="Email"
+               type="email"
+               placeholder="Email Address"
+               required />
+
+    </div>
+
+    <div class="input-group">
+
+        <textarea name="Message"
+                  rows="6"
+                  placeholder="Your Message"
+                  required></textarea>
+
+    </div>
+
+    <button type="submit"
+            class="primary-btn">
+
+        <i class="bi bi-send-fill me-2"></i>
+
+        Send Message
+
+    </button>
+
+</form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<button id="backToTop">
+
+    <i class="bi bi-arrow-up"></i>
+
+</button>
+
+<!-- ===================================
+     FOOTER
+=================================== -->
+
+<footer class="footer reveal-up">
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div>
+
+                <h3>Hostel Management System</h3>
+
+                <p>
+
+                    A modern hostel allocation platform that
+                    simplifies accommodation management for
+                    students and administrators.
+
+                </p>
+
+            </div>
+
+            <div>
+
+                <h4>Quick Links</h4>
+
+                <ul>
+
+                    <li><a href="#home">Home</a></li>
+
+                    <li><a href="#features">Features</a></li>
+
+                    <li><a href="#rooms">Hostels</a></li>
+
+                    <li><a href="#contact">Contact</a></li>
+
+                    <li><a href="#faq">FAQ</a></li>
+
+                </ul>
+
+            </div>
+
+            <div>
+
+                <h4>Services</h4>
+
+                <ul>
+
+                    <li>Hostel Application</li>
+
+                    <li>Room Allocation</li>
+
+                    <li>Online Payment</li>
+
+                    <li>Student Dashboard</li>
+
+                </ul>
+
+            </div>
+
+            <div>
+
+                <h4>Contact</h4>
+
+                <ul>
+
+                    <li>Email</li>
+
+                    <li>ahmadmasroor856@gmail.com</li>
+
+                    <li>+234 7042827492</li>
+
+                    <li>Monday - Friday</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            © @DateTime.Now.Year Hostel Management System.
+            All Rights Reserved.
+
+        </div>
+
+    </div>
+
+</footer>

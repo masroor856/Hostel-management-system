@@ -1,0 +1,334 @@
+@model HostelManagementSystem.ViewModels.AdminProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Profile";
+}
+
+<div class="admin-profile-page">
+
+    <!-- PAGE HEADER -->
+
+    <div class="admin-profile-header">
+
+        <div>
+
+            <h2>
+
+                <i class="bi bi-person-gear me-2"></i>
+
+                Edit Administrator Profile
+
+            </h2>
+
+            <p>
+
+                Update your administrator information.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- EDIT CARD -->
+
+    <div class="card admin-edit-card">
+
+        <div class="card-body">
+
+            <form asp-action="Edit"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                @Html.AntiForgeryToken()
+
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger admin-validation">
+                </div>
+
+
+                <!-- PROFILE PICTURE -->
+
+                <div class="text-center mb-4">
+
+                    <img src="@(string.IsNullOrWhiteSpace(Model.CurrentProfilePicture)
+                        ? Url.Content("~/images/default-user.png")
+                        : Url.Content(Model.CurrentProfilePicture))"
+                         alt="Current Profile Picture"
+                         class="admin-edit-image mb-3" />
+
+                    <div class="admin-upload-box">
+
+                        <label asp-for="ProfilePicture"
+                               class="form-label fw-semibold">
+
+                            <i class="bi bi-camera me-1"></i>
+
+                            Profile Picture
+
+                        </label>
+
+                        <input asp-for="ProfilePicture"
+                               type="file"
+                               class="form-control"
+                               accept="image/*" />
+
+                        <small class="text-muted">
+
+                            Choose a new picture if you want to change it.
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BASIC INFORMATION -->
+
+                <div class="row g-3">
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="col-md-6">
+
+                        <div class="admin-form-group">
+
+                            <label asp-for="FullName"
+                                   class="form-label">
+
+                                Full Name
+
+                            </label>
+
+                            <input asp-for="FullName"
+                                   class="form-control" />
+
+                            <span asp-validation-for="FullName"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="col-md-6">
+
+                        <div class="admin-form-group">
+
+                            <label asp-for="Email"
+                                   class="form-label">
+
+                                Email Address
+
+                            </label>
+
+                            <input asp-for="Email"
+                                   type="email"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Email"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <!-- PHONE -->
+
+                    <div class="col-md-6">
+
+                        <div class="admin-form-group">
+
+                            <label asp-for="PhoneNumber"
+                                   class="form-label">
+
+                                Phone Number
+
+                            </label>
+
+                            <input asp-for="PhoneNumber"
+                                   class="form-control" />
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="col-12">
+
+                        <div class="admin-form-group">
+
+                            <label asp-for="Address"
+                                   class="form-label">
+
+                                Address
+
+                            </label>
+
+                            <textarea asp-for="Address"
+                                      class="form-control"
+                                      rows="3"></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="col-12">
+
+                        <div class="admin-password-section">
+
+                            <h5>
+
+                                <i class="bi bi-shield-lock me-2"></i>
+
+                                Change Password
+
+                            </h5>
+
+                            <p class="small">
+
+                                Leave these fields empty if you do not
+                                want to change your password.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CURRENT PASSWORD -->
+
+                    <div class="col-md-4">
+
+                        <div class="admin-form-group">
+
+                            <label asp-for="CurrentPassword"
+                                   class="form-label">
+
+                                Current Password
+
+                            </label>
+
+                            <input asp-for="CurrentPassword"
+                                   type="password"
+                                   class="form-control"
+                                   autocomplete="current-password" />
+
+                            <span asp-validation-for="CurrentPassword"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NEW PASSWORD -->
+
+                    <div class="col-md-4">
+
+                        <div class="admin-form-group">
+
+                            <label asp-for="NewPassword"
+                                   class="form-label">
+
+                                New Password
+
+                            </label>
+
+                            <input asp-for="NewPassword"
+                                   type="password"
+                                   class="form-control"
+                                   autocomplete="new-password" />
+
+                            <span asp-validation-for="NewPassword"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="col-md-4">
+
+                        <div class="admin-form-group">
+
+                            <label asp-for="ConfirmPassword"
+                                   class="form-label">
+
+                                Confirm New Password
+
+                            </label>
+
+                            <input asp-for="ConfirmPassword"
+                                   type="password"
+                                   class="form-control"
+                                   autocomplete="new-password" />
+
+                            <span asp-validation-for="ConfirmPassword"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="mt-4 d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary admin-save-btn">
+
+                        <i class="bi bi-check-circle me-1"></i>
+
+                        Save Changes
+
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary admin-cancel-btn">
+
+                        <i class="bi bi-arrow-left me-1"></i>
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

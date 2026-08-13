@@ -1,0 +1,82 @@
+@model HostelManagementSystem.Models.Payment
+
+@{
+    ViewData["Title"] = "Payment Details";
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg border-0">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>Payment Details</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th width="30%">Student</th>
+                    <td>@Model.HostelApplication.Student.FullName</td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td>@Model.HostelApplication.Student.Email</td>
+                </tr>
+
+                <tr>
+                    <th>Amount</th>
+                    <td class="fw-bold text-success">
+                        ₦@Model.Amount
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Payment Date</th>
+                    <td>@Model.PaymentDate.ToString("dd MMM yyyy")</td>
+                </tr>
+
+                <tr>
+                    <th>Status</th>
+
+                    <td>
+
+                        @if(Model.Status=="Paid" || Model.Status=="Verified")
+                        {
+                            <span class="badge bg-success">Paid</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">
+                                @Model.Status
+                            </span>
+                        }
+
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <th>Reference</th>
+                    <td>@Model.TransactionReference</td>
+                </tr>
+
+            </table>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

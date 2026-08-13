@@ -1,0 +1,83 @@
+@model HostelManagementSystem.Models.HostelApplication
+
+@{
+    ViewData["Title"] = "Application Details";
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-primary text-white">
+            <h3>Application Details</h3>
+        </div>
+
+        <div class="card-body">
+
+            <dl class="row">
+
+                <dt class="col-sm-4">Student</dt>
+                <dd class="col-sm-8">@Model.Student?.FullName</dd>
+
+                <dt class="col-sm-4">Email</dt>
+                <dd class="col-sm-8">@Model.Student?.Email</dd>
+
+                <dt class="col-sm-4">Room</dt>
+                <dd class="col-sm-8">@Model.HostelRoom?.RoomNumber</dd>
+
+                <dt class="col-sm-4">Application Date</dt>
+                <dd class="col-sm-8">@Model.ApplicationDate.ToShortDateString()</dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">
+
+                    @if(Model.Status=="Accepted")
+                    {
+                        <span class="badge bg-success">Accepted</span>
+                    }
+                    else if(Model.Status=="Rejected")
+                    {
+                        <span class="badge bg-danger">Rejected</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    }
+
+                </dd>
+
+            </dl>
+
+        </div>
+
+        <div class="card-footer">
+
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn btn-primary">
+
+                Edit
+
+            </a>
+
+            <a asp-action="Delete"
+               asp-route-id="@Model.Id"
+               class="btn btn-danger">
+
+                Delete
+
+            </a>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

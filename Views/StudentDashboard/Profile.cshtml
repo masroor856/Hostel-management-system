@@ -1,0 +1,394 @@
+@model HostelManagementSystem.Models.Student
+
+@{
+    ViewData["Title"] = "My Profile";
+    Layout = "_StudentLayout";
+
+    var application = Model.HostelApplications?.FirstOrDefault();
+
+    var payment = application?.Payments?
+    .OrderByDescending(p => p.Status == "Paid")
+    .ThenByDescending(p => p.PaymentDate)
+    .FirstOrDefault();
+}
+<div class="card shadow border-0 mb-4">
+
+    <div class="card-body text-center">
+
+        <h4 class="mt-3">
+
+            @Model.FullName
+
+        </h4>
+
+        <p class="text-muted">
+
+            @Model.Email
+
+        </p>
+
+        <form asp-action="UploadProfilePicture"
+              method="post"
+              enctype="multipart/form-data">
+
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+
+                <input type="file"
+                       name="profilePicture"
+                       class="form-control"
+                       accept=".jpg,.jpeg,.png,.webp" />
+
+            </div>
+
+            <button class="btn btn-primary">
+
+                Upload New Picture
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div class="container-fluid">
+
+    <!-- Profile Header -->
+    <a asp-action="EditProfile"
+   class="btn btn-warning">
+
+    <i class="bi bi-pencil-square"></i>
+
+    Edit Profile
+
+</a>
+    <div class="card profile-header-card mb-4">
+
+        <div class="card-body p-5">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-2 text-center">
+
+                 <img src="@(string.IsNullOrEmpty(Model.ProfilePicture)
+            ? "/images/default-user.png"
+            : Model.ProfilePicture)"
+             class="rounded-circle border shadow"
+             width="170"
+             height="170"
+             style="object-fit:cover;" />
+
+                </div>
+
+                <div class="col-lg-7">
+
+                    <h2 class="fw-bold mb-2">
+                        @Model.FullName
+                    </h2>
+
+                    <p class="text-muted mb-1">
+                        @Model.Email
+                    </p>
+
+                    <p class="text-muted mb-1">
+                        Student Portal
+                    </p>
+
+                    @if(application != null)
+                    {
+                        if(application.Status=="Accepted")
+                        {
+                            <span class="badge bg-success fs-6">
+                                Hostel Approved
+                            </span>
+                        }
+                        else if(application.Status=="Pending")
+                        {
+                            <span class="badge bg-warning text-dark fs-6">
+                                Application Pending
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger fs-6">
+                                @application.Status
+                            </span>
+                        }
+                    }
+
+                </div>
+
+                <div class="col-lg-3 text-end">
+
+                    <a asp-action="Index"
+                       class="btn btn-primary">
+
+                        Dashboard
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+    </div>
+    <div class="row">
+
+        <!-- Personal Information -->
+
+        <div class="col-lg-6 mb-4">
+
+           <div class="card info-card h-100">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h5 class="mb-0">
+                        <i class="bi bi-person-fill me-2"></i>
+                        Personal Information
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-borderless">
+
+                        <tr>
+                            <th>Full Name</th>
+                            <td>@Model.FullName</td>
+                        </tr>
+
+                        <tr>
+                            <th>Email</th>
+                            <td>@Model.Email</td>
+                        </tr>
+
+                        @if(!string.IsNullOrEmpty(Model.PhoneNumber))
+                        {
+                            <tr>
+                                <th>Phone</th>
+                                <td>@Model.PhoneNumber</td>
+                            </tr>
+                        }
+
+                        @if(!string.IsNullOrEmpty(Model.Gender))
+                        {
+                            <tr>
+                                <th>Gender</th>
+                                <td>@Model.Gender</td>
+                            </tr>
+                        }
+
+                        @if(!string.IsNullOrEmpty(Model.Department))
+                        {
+                            <tr>
+                                <th>Department</th>
+                                <td>@Model.Department</td>
+                            </tr>
+                        }
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Hostel Information -->
+
+        <div class="col-lg-6 mb-4">
+
+           <div class="card info-card h-100">
+
+                <div class="card-header bg-success text-white">
+
+                    <h5 class="mb-0">
+                        <i class="bi bi-house-door-fill me-2"></i>
+                        Hostel Information
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-borderless">
+
+                        <tr>
+
+                            <th>Application</th>
+
+                            <td>
+
+                                @(application?.Status ?? "No Application")
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Room Number</th>
+
+                            <td>
+
+                                @(Model.RoomAllocation?.HostelRoom?.RoomNumber ?? "Not Allocated")
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Allocation Date</th>
+
+                            <td>
+
+                                @(Model.RoomAllocation == null
+                                    ? "Not Allocated"
+                                    : Model.RoomAllocation.AllocationDate.ToString("dd MMM yyyy"))
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Room Fee</th>
+
+                            <td>
+
+                                ₦@(application?.HostelRoom?.Price.ToString("N2") ?? "0.00")
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+       <!-- Payment -->
+
+<div class="col-lg-6">
+
+    <div class="card border-0 shadow-sm h-100">
+
+        <div class="card-header bg-white border-0 pt-4">
+
+            <h4 class="fw-bold">
+
+                <i class="bi bi-credit-card-fill text-success me-2"></i>
+
+                Payment Information
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            @if (payment != null)
+            {
+
+                <div class="mb-4">
+
+                    <h2 class="fw-bold">
+
+                        ₦@payment.Amount.ToString("N2")
+
+                    </h2>
+
+                </div>
+
+
+                <!-- PAYMENT STATUS -->
+
+                <p>
+
+                    <strong>Status:</strong>
+
+                    @if (payment.Status == "Paid")
+                    {
+                        <span class="badge bg-success ms-2">
+
+                            <i class="bi bi-check-circle me-1"></i>
+
+                            Paid
+
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark ms-2">
+
+                            <i class="bi bi-clock me-1"></i>
+
+                            Pending
+
+                        </span>
+                    }
+
+                </p>
+
+
+                <!-- PAID SESSION -->
+
+                <p>
+
+                    <strong>Hostel Session:</strong>
+
+                    <span class="badge bg-primary ms-2">
+
+                        <i class="bi bi-calendar-event me-1"></i>
+
+                        @payment.Session
+
+                    </span>
+
+                </p>
+
+
+                <!-- PAYMENT DATE -->
+
+                <p>
+
+                    <strong>Payment Date:</strong>
+
+                    @payment.PaymentDate.ToString("dd MMM yyyy")
+
+                </p>
+
+            }
+            else
+            {
+
+                <div class="alert alert-warning mb-0">
+
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+
+                    No payment record found.
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>

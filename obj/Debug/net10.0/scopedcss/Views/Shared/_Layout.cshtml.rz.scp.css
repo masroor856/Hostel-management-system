@@ -1,0 +1,177 @@
+/* ===========================================
+   NAVIGATION
+=========================================== */
+
+.navbar[b-a8h0acvqya]{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+padding:20px 0;
+
+backdrop-filter:blur(18px);
+
+background:rgba(255,255,255,.75);
+
+border-bottom:1px solid rgba(255,255,255,.25);
+
+transition:.35s;
+
+z-index:9999;
+
+}
+
+.navbar.scrolled[b-a8h0acvqya]{
+
+    background:rgba(255,255,255,.85);
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.nav-wrapper[b-a8h0acvqya]{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
+
+.logo[b-a8h0acvqya]{
+
+    font-size:32px;
+
+    font-weight:800;
+
+    color:var(--primary);
+
+    letter-spacing:2px;
+
+}
+
+.nav-links[b-a8h0acvqya]{
+
+    display:flex;
+
+    gap:45px;
+
+}
+
+.nav-links a[b-a8h0acvqya]{
+
+    color:var(--dark);
+
+    font-weight:600;
+
+    position:relative;
+
+    transition:.3s;
+
+}
+
+.nav-links a[b-a8h0acvqya]::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-8px;
+
+    width:0;
+
+    height:3px;
+
+    border-radius:20px;
+
+    background:var(--secondary);
+
+    transition:.35s;
+
+}
+
+.nav-links a:hover[b-a8h0acvqya]::after{
+
+    width:100%;
+
+}
+
+.nav-buttons[b-a8h0acvqya]{
+
+    display:flex;
+
+    gap:18px;
+
+}
+
+.btn-login[b-a8h0acvqya]{
+
+    color:var(--primary);
+
+    font-weight:600;
+
+    padding:12px 24px;
+
+    transition:.35s;
+
+}
+
+.btn-register[b-a8h0acvqya]{
+
+    padding:14px 28px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary));
+
+    color:white;
+
+    border-radius:50px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+.primary-btn[b-a8h0acvqya]{
+
+transition:.35s;
+
+overflow:hidden;
+
+position:relative;
+
+}
+
+.primary-btn:hover[b-a8h0acvqya]{
+
+transform:translateY(-6px);
+
+box-shadow:0 20px 45px rgba(37,99,235,.35);
+
+}
+
+.btn-register:hover[b-a8h0acvqya]{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 30px rgba(13,59,102,.25);
+
+}
+
+.btn-login:hover[b-a8h0acvqya]{
+
+    color:var(--secondary);
+
+}

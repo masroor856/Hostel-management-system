@@ -1,0 +1,65 @@
+@model HostelManagementSystem.Models.HostelRoom
+
+@{
+    ViewData["Title"] = "Delete Room";
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-4">
+
+    <div class="card border-danger shadow">
+
+        <div class="card-header bg-danger text-white">
+
+            <h3>Delete Hostel Room</h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="alert alert-warning">
+
+                <strong>Warning!</strong>
+
+                This action cannot be undone.
+
+            </div>
+
+            <dl class="row">
+
+                <dt class="col-sm-4">Room Number</dt>
+                <dd class="col-sm-8">@Model.RoomNumber</dd>
+
+                <dt class="col-sm-4">Price</dt>
+                <dd class="col-sm-8">₦@Model.Price.ToString("N2")</dd>
+
+                <dt class="col-sm-4">Capacity</dt>
+                <dd class="col-sm-8">@Model.Capacity</dd>
+
+                <dt class="col-sm-4">Occupied Space</dt>
+                <dd class="col-sm-8">@Model.OccupiedSpace</dd>
+
+            </dl>
+
+            <form asp-action="Delete">
+
+                @Html.AntiForgeryToken()
+
+                <input asp-for="Id" type="hidden"/>
+
+                <button class="btn btn-danger">
+                    Delete Room
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

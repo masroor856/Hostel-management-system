@@ -1,0 +1,73 @@
+@model HostelManagementSystem.Models.HostelApplication
+
+@{
+    ViewData["Title"] = "Edit Application";
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-warning">
+
+<h3>Edit Hostel Application</h3>
+
+</div>
+
+<div class="card-body">
+
+<form asp-action="Edit">
+
+@Html.AntiForgeryToken()
+
+<input type="hidden" asp-for="Id"/>
+
+<div class="mb-3">
+
+<label>Status</label>
+
+<select asp-for="Status" class="form-select">
+
+<option>Pending</option>
+
+<option>Accepted</option>
+
+<option>Rejected</option>
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>Room</label>
+
+<select asp-for="HostelRoomId"
+        class="form-select"
+        asp-items="@(new SelectList(ViewBag.Rooms,"Id","RoomNumber"))">
+
+</select>
+
+</div>
+
+<button class="btn btn-warning">
+
+Save Changes
+
+</button>
+
+<a asp-action="Index"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>

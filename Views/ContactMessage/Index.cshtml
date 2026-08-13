@@ -1,0 +1,260 @@
+@model IEnumerable<HostelManagementSystem.Models.ContactMessage>
+
+@{
+    ViewData["Title"] = "Messages";
+    Layout = "_AdminLayout";
+
+    var total = Model.Count();
+    var unread = Model.Count(x => !x.IsRead);
+    var read = Model.Count(x => x.IsRead);
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold">
+
+                <i class="bi bi-envelope-paper-fill text-primary me-2"></i>
+
+                Contact Messages
+
+            </h2>
+
+            <p class="text-muted">
+
+                Manage messages received from visitors.
+
+            </p>
+
+        </div>
+
+        <form asp-action="Index" method="get" class="d-flex">
+
+            <input type="text"
+                   name="search"
+                   value="@Context.Request.Query["search"]"
+                   class="form-control me-2"
+                   placeholder="Search messages..." />
+
+            <button class="btn btn-primary">
+
+                <i class="bi bi-search"></i>
+
+            </button>
+
+        </form>
+
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+
+            @TempData["Success"]
+
+            <button class="btn-close" data-bs-dismiss="alert"></button>
+
+        </div>
+    }
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 bg-primary text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-envelope-fill display-5"></i>
+
+                    <h5 class="mt-2">Total Messages</h5>
+
+                    <h2>@total</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 bg-warning text-dark">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-envelope-exclamation-fill display-5"></i>
+
+                    <h5 class="mt-2">Unread</h5>
+
+                    <h2>@unread</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow border-0 bg-success text-white">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-envelope-check-fill display-5"></i>
+
+                    <h5 class="mt-2">Read</h5>
+
+                    <h2>@read</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow border-0">
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                @if (Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr class="@(!item.IsRead ? "table-warning" : "")">
+
+                            <td>
+
+                                <strong>@item.FullName</strong>
+
+                            </td>
+
+                            <td>@item.Email</td>
+
+                            <td>
+
+                                @item.DateSent.ToString("dd MMM yyyy hh:mm tt")
+
+                            </td>
+
+                            <td>
+
+                                @if (item.IsRead)
+                                {
+                                    <span class="badge bg-success">
+
+                                        Read
+
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">
+
+                                        Unread
+
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td class="text-end">
+
+                              <a asp-controller="ContactMessage"
+   asp-action="Details"
+   asp-route-id="@item.Id"
+   class="btn btn-primary btn-sm">
+
+    <i class="bi bi-eye-fill"></i>
+
+    View
+
+</a>
+                                @if(item.IsRead)
+                                {
+                                    <a asp-controller="ContactMessage"
+                                       asp-action="MarkUnread"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-warning btn-sm">
+
+                                        <i class="bi bi-envelope"></i>
+
+                                        Unread
+
+                                    </a>
+                                }
+
+                                <a asp-controller="ContactMessage"
+                                asp-action="Delete"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Delete this message permanently?');">
+
+                                    <i class="bi bi-trash-fill"></i>
+
+                                    Delete
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+
+                        <td colspan="5" class="text-center py-5">
+
+                            <i class="bi bi-inbox display-2 text-muted"></i>
+
+                            <h4 class="mt-3">
+
+                                No Messages Found
+
+                            </h4>
+
+                            <p class="text-muted">
+
+                                Messages from visitors will appear here.
+
+                            </p>
+
+                        </td>
+
+                    </tr>
+                }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

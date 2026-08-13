@@ -1,0 +1,125 @@
+@model HostelManagementSystem.Models.RoomAllocation
+
+@{
+    ViewData["Title"] = "Delete Room Allocation";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card shadow border-danger">
+
+                <div class="card-header bg-danger text-white">
+
+                    <h3 class="mb-0">
+                        <i class="bi bi-trash-fill me-2"></i>
+                        Delete Room Allocation
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="text-center mb-4">
+
+                        <i class="bi bi-exclamation-triangle-fill text-danger display-1"></i>
+
+                        <h4 class="mt-3 text-danger">
+                            Are you sure?
+                        </h4>
+
+                        <p class="text-muted">
+                            This action will permanently delete the room allocation record.
+                            This action cannot be undone.
+                        </p>
+
+                    </div>
+
+                    <hr />
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-4 fw-bold">
+                            <i class="bi bi-person-fill text-primary me-2"></i>
+                            Student
+                        </div>
+
+                        <div class="col-md-8">
+                            @Model.Student.FullName
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-4 fw-bold">
+                            <i class="bi bi-building text-success me-2"></i>
+                            Room
+                        </div>
+
+                        <div class="col-md-8">
+
+                            <span class="badge bg-primary fs-6">
+                                @Model.HostelRoom.RoomNumber
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-4">
+
+                        <div class="col-md-4 fw-bold">
+                            <i class="bi bi-calendar-event text-warning me-2"></i>
+                            Allocation Date
+                        </div>
+
+                        <div class="col-md-8">
+                            @Model.AllocationDate.ToString("dd MMMM yyyy")
+                        </div>
+
+                    </div>
+
+                    <form asp-action="Delete" method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-flex justify-content-between">
+
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary">
+
+                                <i class="bi bi-arrow-left-circle me-1"></i>
+
+                                Cancel
+
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-danger">
+
+                                <i class="bi bi-trash-fill me-1"></i>
+
+                                Delete Allocation
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

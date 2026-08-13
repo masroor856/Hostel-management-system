@@ -1,0 +1,127 @@
+@model HostelManagementSystem.Models.HostelApplication
+
+@{
+    ViewData["Title"] = "Apply for Hostel";
+    Layout = "_StudentLayout";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-header bg-primary text-white py-3">
+
+                    <h3 class="mb-0">
+                        🏠 Hostel Room Application
+                    </h3>
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <div class="alert alert-info">
+
+                        Please select an available hostel room and submit your application.
+                        Your application will be reviewed by the hostel administrator.
+
+                    </div>
+
+                    <form asp-action="Apply"
+                          asp-controller="HostelApplication"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="All"
+                             class="text-danger mb-3"></div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                Available Rooms
+
+                            </label>
+
+                            <select asp-for="HostelRoomId"
+                                    class="form-select form-select-lg">
+
+                                <option value="">-- Select Hostel Room --</option>
+
+                                @foreach (var room in ViewBag.Rooms)
+                                {
+                                    <option value="@room.Id">
+
+                                        Room @room.RoomNumber
+                                        |
+                                        Capacity: @room.Capacity
+                                        |
+                                        Fee: ₦@room.Price
+
+                                    </option>
+                                }
+
+                            </select>
+
+                            <span asp-validation-for="HostelRoomId"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                Application Date
+
+                            </label>
+
+                            <input class="form-control"
+                                   value="@DateTime.Now.ToString("dddd, dd MMMM yyyy")"
+                                   readonly />
+
+                        </div>
+
+                        <div class="d-grid">
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg">
+
+                                Submit Application
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="card-footer text-center">
+
+                    <a asp-controller="StudentDashboard"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        Back to Dashboard
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

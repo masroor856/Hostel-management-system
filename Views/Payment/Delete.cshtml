@@ -1,0 +1,90 @@
+@model HostelManagementSystem.Models.Payment
+
+@{
+    ViewData["Title"] = "Delete Payment";
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+<div class="col-lg-7">
+
+<div class="card shadow-lg border-danger">
+
+<div class="card-header bg-danger text-white">
+
+<h3>Delete Payment</h3>
+
+</div>
+
+<div class="card-body text-center">
+
+<h4 class="text-danger">
+
+Are you sure?
+
+</h4>
+
+<p>
+
+You are about to permanently delete this payment record.
+
+</p>
+
+<hr/>
+
+<p>
+
+<strong>Student:</strong>
+
+@Model.HostelApplication.Student.FullName
+
+</p>
+
+<p>
+
+<strong>Amount:</strong>
+
+₦@Model.Amount
+
+</p>
+
+<p>
+
+<strong>Status:</strong>
+
+@Model.Status
+
+</p>
+
+<form asp-action="Delete">
+
+<input type="hidden"
+asp-for="Id"/>
+
+<button class="btn btn-danger">
+
+Delete
+
+</button>
+
+<a asp-action="Index"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>

@@ -1,0 +1,133 @@
+@model HostelManagementSystem.Models.HostelRoom
+
+@{
+    ViewData["Title"] = "Create Hostel Room";
+    Layout = "_AdminLayout";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h3 class="mb-0">
+                        <i class="bi bi-building-add"></i>
+                        Create Hostel Room
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-action="Create" method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label asp-for="RoomNumber" class="form-label fw-bold"></label>
+
+                                <input asp-for="RoomNumber"
+                                       class="form-control"
+                                       placeholder="e.g. A101" />
+
+                                <span asp-validation-for="RoomNumber" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label asp-for="HostelType" class="form-label fw-bold"></label>
+
+                                <select asp-for="HostelType" class="form-select">
+
+                                    <option value="">Select Hostel Type</option>
+
+                                    <option value="Boys">Boys Hostel</option>
+
+                                    <option value="Girls">Girls Hostel</option>
+
+                                </select>
+
+                                <span asp-validation-for="HostelType" class="text-danger"></span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label asp-for="Capacity" class="form-label fw-bold"></label>
+
+                                <input asp-for="Capacity"
+                                       type="number"
+                                       min="1"
+                                       class="form-control" />
+
+                                <span asp-validation-for="Capacity" class="text-danger"></span>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label asp-for="Price" class="form-label fw-bold"></label>
+
+                                <input asp-for="Price"
+                                       type="number"
+                                       step="0.01"
+                                       class="form-control"
+                                       placeholder="50000" />
+
+                                <span asp-validation-for="Price" class="text-danger"></span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+
+                                <i class="bi bi-arrow-left"></i>
+
+                                Back
+
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+
+                                <i class="bi bi-plus-circle"></i>
+
+                                Create Room
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

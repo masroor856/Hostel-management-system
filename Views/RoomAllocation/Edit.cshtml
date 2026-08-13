@@ -1,0 +1,132 @@
+@model HostelManagementSystem.Models.RoomAllocation
+
+@{
+    ViewData["Title"] = "Edit Room Allocation";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-warning">
+
+                    <h3 class="mb-0">
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Edit Room Allocation
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-4">
+                        Update the student's room allocation information.
+                    </p>
+
+                    <form asp-action="Edit" method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div asp-validation-summary="All"
+                             class="alert alert-danger">
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label asp-for="StudentId"
+                                   class="form-label fw-bold">
+
+                                <i class="bi bi-person-fill text-primary me-2"></i>
+
+                                Student
+
+                            </label>
+
+                            <select asp-for="StudentId"
+                                    class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Students,"Id","FullName"))">
+                            </select>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label asp-for="HostelRoomId"
+                                   class="form-label fw-bold">
+
+                                <i class="bi bi-building text-success me-2"></i>
+
+                                Hostel Room
+
+                            </label>
+
+                            <select asp-for="HostelRoomId"
+                                    class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Rooms,"Id","RoomNumber"))">
+                            </select>
+
+                        </div>
+
+                        <div class="form-check form-switch mb-4">
+
+                            <input asp-for="IsActive"
+                                   class="form-check-input" />
+
+                            <label asp-for="IsActive"
+                                   class="form-check-label fw-bold">
+
+                                <i class="bi bi-check-circle-fill text-success me-1"></i>
+
+                                Active Allocation
+
+                            </label>
+
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between">
+
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary">
+
+                                <i class="bi bi-arrow-left-circle me-1"></i>
+
+                                Back
+
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-warning">
+
+                                <i class="bi bi-save-fill me-1"></i>
+
+                                Save Changes
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

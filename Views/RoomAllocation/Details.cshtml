@@ -1,0 +1,145 @@
+@model HostelManagementSystem.Models.RoomAllocation
+
+@{
+    ViewData["Title"] = "Allocation Details";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-info text-white">
+
+                    <h3 class="mb-0">
+                        <i class="bi bi-eye-fill me-2"></i>
+                        Room Allocation Details
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row mb-4">
+
+                        <div class="col-md-6">
+
+                            <h6 class="text-muted">
+                                <i class="bi bi-person-fill me-1 text-primary"></i>
+                                Student
+                            </h6>
+
+                            <h5>@Model.Student.FullName</h5>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <h6 class="text-muted">
+                                <i class="bi bi-building me-1 text-success"></i>
+                                Hostel Room
+                            </h6>
+
+                            <h5>
+                                <span class="badge bg-primary">
+                                    @Model.HostelRoom.RoomNumber
+                                </span>
+                            </h5>
+
+                        </div>
+
+                    </div>
+
+                    <hr />
+
+                    <div class="row mb-4">
+
+                        <div class="col-md-6">
+
+                            <h6 class="text-muted">
+                                <i class="bi bi-calendar-event me-1 text-warning"></i>
+                                Allocation Date
+                            </h6>
+
+                            <p class="fs-5">
+                                @Model.AllocationDate.ToString("dd MMMM yyyy")
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <h6 class="text-muted">
+                                <i class="bi bi-check-circle me-1 text-success"></i>
+                                Status
+                            </h6>
+
+                            @if (Model.IsActive)
+                            {
+                                <span class="badge bg-success fs-6">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    Active
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary fs-6">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    Inactive
+                                </span>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-footer bg-light d-flex justify-content-between">
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-left-circle"></i>
+
+                        Back
+
+                    </a>
+
+                    <div>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@Model.Id"
+                           class="btn btn-warning">
+
+                            <i class="bi bi-pencil-square"></i>
+
+                            Edit
+
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@Model.Id"
+                           class="btn btn-danger">
+
+                            <i class="bi bi-trash-fill"></i>
+
+                            Delete
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,111 @@
+@model HostelManagementSystem.Models.RoomAllocation
+
+@{
+    ViewData["Title"] = "Allocate Room";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h3 class="mb-0">
+                        <i class="bi bi-house-add-fill me-2"></i>
+                        Allocate Hostel Room
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <p class="text-muted mb-4">
+                        Select a student and assign an available hostel room.
+                    </p>
+
+                    <form asp-action="Create" method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+                        <div class="mb-4">
+
+                            <label asp-for="StudentId" class="form-label fw-bold">
+                                <i class="bi bi-person-fill text-primary me-2"></i>
+                                Student
+                            </label>
+
+                            <select asp-for="StudentId"
+                                    class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Students,"Id","FullName"))">
+
+                                <option value="">-- Select Student --</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label asp-for="HostelRoomId" class="form-label fw-bold">
+                                <i class="bi bi-building text-success me-2"></i>
+                                Hostel Room
+                            </label>
+
+                            <select asp-for="HostelRoomId"
+                                    class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Rooms,"Id","RoomNumber"))">
+
+                                <option value="">-- Select Room --</option>
+
+                            </select>
+
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between">
+
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary">
+
+                                <i class="bi bi-arrow-left-circle me-1"></i>
+
+                                Back
+
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                <i class="bi bi-check-circle-fill me-1"></i>
+
+                                Allocate Room
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

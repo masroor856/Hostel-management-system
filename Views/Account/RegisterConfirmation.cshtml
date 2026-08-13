@@ -1,0 +1,66 @@
+@model HostelManagementSystem.ViewModels.ResendConfirmationViewModel
+
+@{
+    ViewData["Title"] = "Registration Successful";
+    Layout = "_AccountLayout";
+}
+
+<div class="login-header">
+
+    <div class="login-icon">
+
+        <i class="bi bi-check-circle-fill"></i>
+
+    </div>
+
+    <h2>Registration Successful</h2>
+
+    <p>
+
+        Your account has been created successfully.
+
+    </p>
+
+</div>
+
+<div class="alert alert-info text-center">
+
+    A verification email has been sent to
+
+    <br />
+
+    <strong>@Model.Email</strong>
+
+    <hr />
+
+    Please check your Inbox, Spam or Junk folder.
+
+</div>
+
+<form asp-action="ResendConfirmationEmail"
+      method="post">
+
+    @Html.AntiForgeryToken()
+
+    <input asp-for="Email"
+           type="hidden"/>
+
+    <button class="btn btn-warning login-btn w-100">
+
+        <i class="bi bi-arrow-repeat me-2"></i>
+
+        Resend Verification Email
+
+    </button>
+
+</form>
+
+<div class="account-links mt-4">
+
+    <a asp-action="Login">
+
+        Go to Login
+
+    </a>
+
+</div>

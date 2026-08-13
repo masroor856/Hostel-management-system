@@ -1,0 +1,226 @@
+@model HostelManagementSystem.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Create Account";
+    Layout = "_AccountLayout";
+}
+
+<div class="login-header">
+
+    <div class="login-icon">
+
+        <i class="bi bi-person-plus-fill"></i>
+
+    </div>
+
+    <h2>Create Account</h2>
+
+    <p>
+
+        Fill in your information to create your Hostel Management account.
+
+    </p>
+
+</div>
+
+<form asp-action="Register" method="post">
+
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly"
+         class="alert alert-danger"></div>
+
+    <div class="form-floating mb-3">
+
+        <input asp-for="FullName"
+               class="form-control"
+               placeholder="Full Name"/>
+
+        <label asp-for="FullName"></label>
+
+        <span asp-validation-for="FullName"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="form-floating mb-3">
+
+        <input asp-for="Email"
+               class="form-control"
+               placeholder="Email"/>
+
+        <label asp-for="Email"></label>
+
+        <span asp-validation-for="Email"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="form-floating mb-3">
+
+        <input asp-for="PhoneNumber"
+               class="form-control"
+               placeholder="Phone Number"/>
+
+        <label asp-for="PhoneNumber"></label>
+
+        <span asp-validation-for="PhoneNumber"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <div class="form-floating">
+
+                <select asp-for="Gender"
+                        class="form-select">
+
+                    <option value="">Select</option>
+
+                    <option>Male</option>
+
+                    <option>Female</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <div class="form-floating">
+                    <select asp-for="Department"
+                        class="form-select">
+
+                    <option value="">Select Department</option>
+
+                    <option>Software Engineering</option>
+
+                    <option>Web Development</option>
+
+                    <option>Electrical Engineering</option>
+
+                    <option>Building Construction</option>
+
+                    <option>Hardware Engineering</option>
+
+                    <option>Plumbing</option>
+
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="form-floating mb-3 position-relative">
+
+        <input asp-for="Password"
+               id="password"
+               type="password"
+               class="form-control"
+               placeholder="Password"/>
+
+        <label asp-for="Password"></label>
+
+        <button type="button"
+                class="password-toggle"
+                onclick="togglePassword('password','eye1')">
+
+            <i id="eye1"
+               class="bi bi-eye"></i>
+
+        </button>
+
+        <span asp-validation-for="Password"
+              class="text-danger"></span>
+
+    </div>
+
+    <div class="form-floating mb-4 position-relative">
+
+        <input asp-for="ConfirmPassword"
+               id="confirmPassword"
+               type="password"
+               class="form-control"
+               placeholder="Confirm Password"/>
+
+        <label asp-for="ConfirmPassword"></label>
+
+        <button type="button"
+                class="password-toggle"
+                onclick="togglePassword('confirmPassword','eye2')">
+
+            <i id="eye2"
+               class="bi bi-eye"></i>
+
+        </button>
+
+        <span asp-validation-for="ConfirmPassword"
+              class="text-danger"></span>
+
+    </div>
+
+    <button class="btn btn-primary login-btn w-100">
+
+        <i class="bi bi-person-plus-fill me-2"></i>
+
+        Create Account
+
+    </button>
+
+    <div class="account-links">
+
+        <p>
+
+            Already have an account?
+
+        </p>
+
+        <a asp-action="Login">
+
+            Login Here
+
+        </a>
+
+    </div>
+
+</form>
+
+@section Scripts{
+
+<partial name="_ValidationScriptsPartial"/>
+
+<script>
+
+function togglePassword(box,eye){
+
+const input=document.getElementById(box);
+
+const icon=document.getElementById(eye);
+
+if(input.type==="password"){
+
+input.type="text";
+
+icon.className="bi bi-eye-slash";
+
+}else{
+
+input.type="password";
+
+icon.className="bi bi-eye";
+
+
+
+}
+
+}
+
+</script>
+
+}

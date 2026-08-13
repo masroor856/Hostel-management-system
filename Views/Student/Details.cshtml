@@ -1,0 +1,275 @@
+@model HostelManagementSystem.Models.Student
+
+@{
+    ViewData["Title"] = "Student Details";
+    Layout = "_AdminLayout";
+
+    var application = Model.HostelApplications?.FirstOrDefault();
+    var payment = application?.Payments?.FirstOrDefault();
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold">
+                <i class="bi bi-person-vcard-fill text-primary"></i>
+                Student Details
+            </h2>
+
+            <p class="text-muted">
+                View complete information about this student.
+            </p>
+        </div>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i>
+            Back to Students
+        </a>
+
+    </div>
+
+    <div class="row">
+
+        <!-- LEFT COLUMN -->
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <img src="@(string.IsNullOrWhiteSpace(Model.ProfilePicture)
+                        ? "/images/default-user.png"
+                        : Model.ProfilePicture)"
+                         class="rounded-circle border shadow mb-3"
+                         width="170"
+                         height="170"
+                         style="object-fit:cover;" />
+
+                    <h3>@Model.FullName</h3>
+
+                    <p class="text-muted mb-4">
+                        @Model.Email
+                    </p>
+
+                    <table class="table table-borderless text-start">
+
+                        <tr>
+                            <th>Phone</th>
+                            <td>@Model.PhoneNumber</td>
+                        </tr>
+
+                        <tr>
+                            <th>Gender</th>
+                            <td>@Model.Gender</td>
+                        </tr>
+
+                        <tr>
+                            <th>Department</th>
+                            <td>
+                                <span class="badge bg-info">
+                                    @Model.Department
+                                </span>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+
+        <div class="col-lg-8">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h5 class="mb-0">
+
+                        Student Information
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered">
+
+                        <tr>
+                            <th width="35%">Full Name</th>
+                            <td>@Model.FullName</td>
+                        </tr>
+
+                        <tr>
+                            <th>Email</th>
+                            <td>@Model.Email</td>
+                        </tr>
+
+                        <tr>
+                            <th>Phone Number</th>
+                            <td>@Model.PhoneNumber</td>
+                        </tr>
+
+                        <tr>
+                            <th>Department</th>
+                            <td>@Model.Department</td>
+                        </tr>
+
+                        <tr>
+                            <th>Application Status</th>
+
+                            <td>
+
+                                @if (application != null)
+                                {
+                                    if (application.Status == "Accepted")
+                                    {
+                                        <span class="badge bg-success">Accepted</span>
+                                    }
+                                    else if (application.Status == "Pending")
+                                    {
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">@application.Status</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">No Application</span>
+                                }
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Allocated Room</th>
+
+                            <td>
+
+                                @(Model.RoomAllocation?.HostelRoom?.RoomNumber ?? "Not Allocated")
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Hostel Fee</th>
+
+                            <td>
+
+                                @(application?.HostelRoom != null
+                                    ? $"₦{application.HostelRoom.Price:N2}"
+                                    : "N/A")
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Payment Status</th>
+
+                            <td>
+
+                                @if (payment != null)
+                                {
+                                    if (payment.Status == "Paid")
+                                    {
+                                        <span class="badge bg-success">✔ Paid</span>
+                                    }
+                                    else if (payment.Status == "Pending")
+                                    {
+                                        <span class="badge bg-warning text-dark">⏳ Pending</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">✖ Failed</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        No Payment Record
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Payment Session</th>
+
+                            <td>
+
+                                @(string.IsNullOrWhiteSpace(payment?.Session)
+                                    ? "Old Payment"
+                                    : payment.Session)
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Application Date</th>
+
+                            <td>
+
+                                @(application != null
+                                    ? application.ApplicationDate.ToString("dd MMM yyyy")
+                                    : "N/A")
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+                <div class="card-footer">
+
+                    <a asp-action="Edit"
+                       asp-route-id="@Model.Id"
+                       class="btn btn-warning">
+
+                        <i class="bi bi-pencil-square"></i>
+
+                        Edit
+
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@Model.Id"
+                       class="btn btn-danger">
+
+                        <i class="bi bi-trash"></i>
+
+                        Delete
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
