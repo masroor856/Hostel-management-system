@@ -1,5 +1,3 @@
-// Repositories/StudentDashboardRepository.cs
-
 using HostelManagementSystem.Data;
 using HostelManagementSystem.Interfaces;
 using HostelManagementSystem.Models;
@@ -7,19 +5,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HostelManagementSystem.Repositories;
 
-public class StudentDashboardRepository
-    : IStudentDashboardRepository
+public class StudentDashboardRepository : IStudentDashboardRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public StudentDashboardRepository(
-        ApplicationDbContext context)
+    public StudentDashboardRepository(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<Student?> GetStudentDashboardAsync(
-        string email)
+    public async Task<Student?> GetStudentDashboardAsync(string email)
     {
         return await _context.Students
             .Include(s => s.HostelApplications)
@@ -29,5 +24,16 @@ public class StudentDashboardRepository
             .Include(s => s.RoomAllocation)
                 .ThenInclude(r => r.HostelRoom)
             .FirstOrDefaultAsync(s => s.Email == email);
+    }
+
+    public async Task UpdateStudentAsync(Student student)
+    {
+        _context.Students.Update(student);
+        await Task.CompletedTask;
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
     }
 }

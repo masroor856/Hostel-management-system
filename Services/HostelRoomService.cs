@@ -38,6 +38,7 @@ namespace HostelManagementSystem.Services
                 RoomNumber = dto.RoomNumber,
                 HostelType = dto.HostelType,
                 Capacity = dto.Capacity,
+                Price = dto.Price,
                 OccupiedSpace = 0,
                 AvailableSpace = dto.Capacity,
                 IsAvailable = dto.Capacity > 0
@@ -56,6 +57,7 @@ namespace HostelManagementSystem.Services
             room.RoomNumber = dto.RoomNumber;
             room.HostelType = dto.HostelType;
             room.Capacity = dto.Capacity;
+            room.Price = dto.Price;
 
             if (room.OccupiedSpace > room.Capacity)
                 room.OccupiedSpace = room.Capacity;

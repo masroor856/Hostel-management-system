@@ -43,7 +43,13 @@ public class AccountRepository : IAccountRepository
     {
         await _context.Students.AddAsync(student);
     }
+        public async Task DeleteStudentAsync(int id)
+{
+    var student = await _context.Students.FindAsync(id);
 
+    if (student != null)
+        _context.Students.Remove(student);
+}
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();

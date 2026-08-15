@@ -103,8 +103,12 @@ public async Task<IActionResult> Index(
             if (application == null)
                 return NotFound();
 
-            ViewBag.Rooms =
-                await _service.GetAvailableRoomsAsync();
+      var email = User.Identity?.Name;
+
+         if (string.IsNullOrWhiteSpace(email))
+         return Challenge();
+
+         ViewBag.AvailableRooms = await _service.GetAvailableRoomsAsync(email);
 
             return View(application);
         }
@@ -121,10 +125,14 @@ public async Task<IActionResult> Index(
 
             if (!ModelState.IsValid)
             {
-                ViewBag.Rooms =
-                    await _service.GetAvailableRoomsAsync();
+                var email = User.Identity?.Name;
 
-                return View(model);
+          if (string.IsNullOrWhiteSpace(email))
+            return Challenge();
+
+            ViewBag.AvailableRooms = await _service.GetAvailableRoomsAsync(email);
+
+              return View(model);
             }
 
             var updated =
@@ -211,8 +219,7 @@ public async Task<IActionResult> Index(
             if (student == null)
                 return RedirectToAction("Register", "Account");
 
-            ViewBag.Rooms =
-                await _service.GetRoomsForStudentAsync(student.Id);
+         ViewBag.Rooms = await _service.GetAvailableRoomsAsync(email);
 
             return View();
         }
@@ -246,11 +253,7 @@ public async Task<IActionResult> Index(
                     "",
                     "You have already applied.");
 
-                ViewBag.Rooms =
-                    await _service.GetRoomsForStudentAsync(
-                        student.Id);
-
-                return View(model);
+                ViewBag.Rooms = await _service.GetAvailableRoomsAsync(email);
             }
 
             if (!ModelState.IsValid)

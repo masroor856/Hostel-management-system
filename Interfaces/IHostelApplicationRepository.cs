@@ -31,5 +31,7 @@ namespace HostelManagementSystem.Interfaces
 
         Task<IEnumerable<HostelRoom>> GetRoomsForStudentAsync(
             int studentId);
+
+            Task<IEnumerable<HostelRoom>> GetAvailableRoomsForStudentAsync(string email);
     }
 }

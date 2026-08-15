@@ -11,7 +11,7 @@ namespace HostelManagementSystem.DTOs
         public string HostelType { get; set; } = string.Empty;
 
         [Required]
-        [Range(0, double.MaxValue)]
+        [Range(1, 10000000)]
         public decimal Price { get; set; }
 
         [Required]

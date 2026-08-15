@@ -28,8 +28,7 @@ namespace HostelManagementSystem.Interfaces
         Task<bool> HasExistingApplicationAsync(
             int studentId);
 
-        Task<IEnumerable<HostelRoomDto>>
-            GetAvailableRoomsAsync();
+      Task<IEnumerable<HostelRoomDto>> GetAvailableRoomsAsync(string email);
 
         Task<IEnumerable<HostelRoomDto>>
             GetRoomsForStudentAsync(int studentId);

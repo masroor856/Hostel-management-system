@@ -3,6 +3,7 @@ using HostelManagementSystem.DTOs;
 using HostelManagementSystem.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using HostelManagementSystem.Models;
 
 namespace HostelManagementSystem.Controllers
 {
@@ -63,45 +64,42 @@ namespace HostelManagementSystem.Controllers
             return View(room);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(int id)
-        {
-            var room = await _roomService.GetRoomById(id);
+[HttpGet]
+public async Task<IActionResult> Edit(int id)
+{
+  var room = await _roomService.GetRoomById(id);
 
-            if (room == null)
-                return NotFound();
+if (room == null)
+    return NotFound();
 
-            var dto = new UpdateHostelRoomDto
-            {
-                Id = room.Id,
-                RoomNumber = room.RoomNumber,
-                HostelType = room.HostelType,
-                Capacity = room.Capacity
-            };
+return View(room);
+}
 
-            return View(dto);
-        }
+    [HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Edit(int id, HostelRoom room)
+{
+    if (id != room.Id)
+        return BadRequest();
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(
-            int id,
-            UpdateHostelRoomDto dto)
-        {
-            if (id != dto.Id)
-                return BadRequest();
+    if (!ModelState.IsValid)
+        return View(room);
 
-            if (!ModelState.IsValid)
-                return View(dto);
+    var dto = new UpdateHostelRoomDto
+    {
+        Id = room.Id,
+        RoomNumber = room.RoomNumber,
+        HostelType = room.HostelType,
+        Price = room.Price,
+        Capacity = room.Capacity
+    };
 
-            await _roomService.UpdateRoom(dto);
+    await _roomService.UpdateRoom(dto);
 
-            TempData["Success"] =
-                "Room updated successfully.";
+    TempData["Success"] = "Hostel room updated successfully.";
 
-            return RedirectToAction(nameof(Index));
-        }
-
+    return RedirectToAction(nameof(Index));
+}
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {

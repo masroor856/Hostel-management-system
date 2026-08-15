@@ -263,3 +263,4 @@ C:\Users\ALAKA.DESKTOP-RA8R57S\Desktop\HostelManagementSystem\HMS\obj\Debug\net1
 C:\Users\ALAKA.DESKTOP-RA8R57S\Desktop\HostelManagementSystem\HMS\obj\Debug\net10.0\HostelManagementSystem.pdb
 C:\Users\ALAKA.DESKTOP-RA8R57S\Desktop\HostelManagementSystem\HMS\obj\Debug\net10.0\HostelManagementSystem.genruntimeconfig.cache
 C:\Users\ALAKA.DESKTOP-RA8R57S\Desktop\HostelManagementSystem\HMS\obj\Debug\net10.0\ref\HostelManagementSystem.dll
+C:\Users\ALAKA.DESKTOP-RA8R57S\Desktop\HostelManagementSystem\HMS\obj\Debug\net10.0\HostelManagementSystem.sourcelink.json

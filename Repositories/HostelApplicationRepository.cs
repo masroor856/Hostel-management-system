@@ -148,5 +148,33 @@ namespace HostelManagementSystem.Repositories
                     r.Id == application.HostelRoomId)
                 .ToListAsync();
         }
+
+   public async Task<IEnumerable<HostelRoom>> GetAvailableRoomsForStudentAsync(string email)
+{
+    var student = await _context.Students
+        .FirstOrDefaultAsync(s => s.Email == email);
+
+    if (student == null)
+        return Enumerable.Empty<HostelRoom>();
+
+    var gender = student.Gender.Trim().ToLower();
+
+    return await _context.HostelRooms
+        .Where(r =>
+            r.IsAvailable &&
+            r.AvailableSpace > 0 &&
+            (
+                (gender == "male" &&
+                    (r.HostelType.ToLower() == "male" ||
+                     r.HostelType.ToLower() == "boys")) ||
+
+                (gender == "female" &&
+                    (r.HostelType.ToLower() == "female" ||
+                     r.HostelType.ToLower() == "girls"))
+            ))
+        .OrderBy(r => r.RoomNumber)
+        .ToListAsync();
+}
     }
+    
 }

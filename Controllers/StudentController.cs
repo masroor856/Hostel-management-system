@@ -173,7 +173,6 @@ namespace HostelManagementSystem.Controllers
                 PhoneNumber = dto.PhoneNumber,
                 Gender = dto.Gender,
                 Department = dto.Department,
-                ProfilePicture = dto.ProfilePicture
             };
         }
     }

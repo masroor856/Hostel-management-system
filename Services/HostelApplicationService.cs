@@ -186,17 +186,13 @@ namespace HostelManagementSystem.Services
                     studentId);
         }
 
-        public async Task<IEnumerable<HostelRoomDto>>
-            GetAvailableRoomsAsync()
-        {
-            var rooms =
-                await _repository
-                    .GetAvailableRoomsAsync();
+        public async Task<IEnumerable<HostelRoomDto>> GetAvailableRoomsAsync(string email)
+{
+    var rooms =
+        await _repository.GetAvailableRoomsForStudentAsync(email);
 
-            return rooms
-                .Select(MapRoom)
-                .ToList();
-        }
+    return rooms.Select(MapRoom).ToList();
+}
 
         public async Task<IEnumerable<HostelRoomDto>>
             GetRoomsForStudentAsync(

@@ -14,6 +14,6 @@ public interface IAccountRepository
     Task<Student?> GetStudentByEmailAsync(string email);
 
     Task AddStudentAsync(Student student);
-
+     Task DeleteStudentAsync(int id);
     Task SaveChangesAsync();
 }

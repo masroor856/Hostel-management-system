@@ -126,6 +126,11 @@ namespace HostelManagementSystem.Services
             return application?.Id;
         }
 
+        public async Task<HostelApplication?> GetApprovedApplication(string email)
+{
+    return await _repository.GetApprovedApplicationAsync(email);
+}
+
         // =========================================================
         // CREATE PAYMENT
         // =========================================================
@@ -138,7 +143,7 @@ public async Task<string> CreatePayment(
 
     if (application == null)
         throw new InvalidOperationException(
-            "You do not have an approved hostel application yet.");
+            "No approved hostel application found.");
 
     if (dto.HostelApplicationId != application.Id)
         throw new UnauthorizedAccessException();
@@ -172,17 +177,11 @@ public async Task<string> CreatePayment(
     var payment = new Payment
     {
         HostelApplicationId = application.Id,
-
-        Amount = application.HostelRoom.Price,
-
+        Amount = application.HostelRoom.Price,   // Correct hostel fee
         Session = dto.Session,
-
         PaymentDate = DateTime.UtcNow,
-
         Status = "Pending",
-
-        TransactionReference =
-            Guid.NewGuid().ToString("N")
+        TransactionReference = Guid.NewGuid().ToString("N")
     };
 
     await _repository.AddAsync(payment);

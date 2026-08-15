@@ -26,7 +26,9 @@ public interface IAccountService
 
     Task<bool> ResetPasswordAsync(
         ResetPasswordDto dto);
-
+  Task SendConfirmationEmailAsync(string email);
+Task SendPasswordResetEmailAsync(string email);
+    
     Task<string?> GenerateConfirmationTokenAsync(
         string email);
 

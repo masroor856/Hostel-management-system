@@ -103,7 +103,7 @@ public async Task<IActionResult> Index(string? search)
         // CREATE
         // =========================
 
-      [Authorize]
+    [Authorize]
 [HttpGet]
 public async Task<IActionResult> Create()
 {
@@ -120,36 +120,19 @@ public async Task<IActionResult> Create()
         TempData["Error"] =
             "You do not have an approved hostel application yet.";
 
-        return RedirectToAction(
-            "Index",
-            "StudentDashboard");
+        return RedirectToAction("Index", "StudentDashboard");
     }
-
-    var paidSessions =
-        await _paymentService.GetPaidSessions(
-            applicationId.Value);
 
     ViewBag.PaidSessions =
-        paidSessions.ToList();
+        (await _paymentService.GetPaidSessions(applicationId.Value)).ToList();
 
     var payment =
-        await _paymentService.GetPaymentForCreation(
-            applicationId.Value);
-
-    if (payment == null)
-    {
-        TempData["Error"] =
-            "Unable to load your hostel payment information.";
-
-        return RedirectToAction(
-            "Index",
-            "StudentDashboard");
-    }
+        await _paymentService.GetPaymentForCreation(applicationId.Value);
 
     return View(payment);
 }
 
-      [Authorize]
+[Authorize]
 [HttpPost]
 [ValidateAntiForgeryToken]
 public async Task<IActionResult> Create(

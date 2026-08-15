@@ -18,13 +18,13 @@ namespace HostelManagementSystem.Interfaces
         Task<IEnumerable<string>> GetPaidSessions(
             int applicationId);
 
-        Task<int?> GetApprovedApplicationId(
-            string email);
-            Task<Payment> GetPaymentForCreation(int applicationId);
+        Task<int?> GetApprovedApplicationId(string email);
 
-        Task<string> CreatePayment(
-    CreatePaymentDto dto,
-    string email);
+        Task<HostelApplication?> GetApprovedApplication(string email);
+
+        Task<Payment> GetPaymentForCreation(int applicationId);
+
+        Task<string> CreatePayment(CreatePaymentDto dto,string email);
 
         Task<bool> VerifyPayment(
             string reference);

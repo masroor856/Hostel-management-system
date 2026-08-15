@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Verification Email Sent";
+    Layout = "_AccountLayout";
+}
+
+<div class="login-header">
+    <div class="login-icon">
+        <i class="bi bi-envelope-check-fill"></i>
+    </div>
+
+    <h2>Email Sent</h2>
+
+    <p>A new verification email has been sent.</p>
+</div>
+
+<div class="alert alert-success text-center">
+    Please check your Inbox, Spam or Junk folder.
+</div>
+
+<a asp-action="Login" class="btn btn-primary login-btn w-100">
+    Return to Login
+</a>
