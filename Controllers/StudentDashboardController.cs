@@ -47,26 +47,16 @@ public async Task<IActionResult> Profile()
     if (string.IsNullOrEmpty(email))
         return Challenge();
 
-    var dto = await _studentDashboardService.GetProfileAsync(email);
+    var model =
+        await _studentDashboardService.GetProfileAsync(email);
 
-    if (dto == null)
+    if (model == null)
     {
         TempData["Error"] = "Student profile not found.";
         return RedirectToAction(nameof(Index));
     }
 
-    var student = new Student
-    {
-        Id = dto.Id,
-        FullName = dto.FullName,
-        Email = dto.Email,
-        PhoneNumber = dto.PhoneNumber,
-        Gender = dto.Gender,
-        Department = dto.Department,
-        ProfilePicture = dto.ProfilePicture
-    };
-
-    return View(student);
+    return View(model);
 }
 
     [HttpPost]

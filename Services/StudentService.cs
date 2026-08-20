@@ -114,19 +114,139 @@ namespace HostelManagementSystem.Services
             return true;
         }
 
-        private static StudentDto MapToDto(
-            Student student)
-        {
-            return new StudentDto
-            {
-                Id = student.Id,
-                FullName = student.FullName,
-                Email = student.Email,
-                PhoneNumber = student.PhoneNumber,
-                Gender = student.Gender,
-                Department = student.Department,
-                ProfilePicture = student.ProfilePicture
-            };
-        }
+       private static StudentDto MapToDto(Student student)
+{
+    var application = student.HostelApplications?
+        .OrderByDescending(a => a.ApplicationDate)
+        .FirstOrDefault();
+
+    var allocation = student.RoomAllocation;
+
+    return new StudentDto
+    {
+        Id = student.Id,
+        FullName = student.FullName,
+        Email = student.Email,
+        PhoneNumber = student.PhoneNumber,
+        Gender = student.Gender,
+        Department = student.Department,
+        ProfilePicture = student.ProfilePicture,
+
+        HostelType =
+            allocation?.HostelRoom?.HostelType
+            ?? application?.HostelRoom?.HostelType,
+
+        RoomNumber =
+            allocation?.HostelRoom?.RoomNumber
+            ?? application?.HostelRoom?.RoomNumber,
+
+        ApplicationStatus =
+            application?.Status,
+
+        HasAllocation =
+            allocation != null &&
+            allocation.IsActive,
+
+        HostelApplications =
+            student.HostelApplications?
+                .OrderByDescending(a => a.ApplicationDate)
+                .Select(a => new HostelApplicationDto
+                {
+                    Id = a.Id,
+                    StudentId = a.StudentId,
+                    HostelRoomId = a.HostelRoomId,
+                    ApplicationDate = a.ApplicationDate,
+                    Status = a.Status,
+
+                    HostelRoom = a.HostelRoom == null
+                        ? null
+                        : new HostelRoomDto
+                        {
+                            Id = a.HostelRoom.Id,
+                            RoomNumber = a.HostelRoom.RoomNumber,
+                            HostelType = a.HostelRoom.HostelType,
+                            Capacity = a.HostelRoom.Capacity,
+                            AvailableSpace = a.HostelRoom.AvailableSpace,
+                            OccupiedSpace = a.HostelRoom.OccupiedSpace,
+                            IsAvailable = a.HostelRoom.IsAvailable,
+                            Price = a.HostelRoom.Price
+                        },
+
+                    Payments = a.Payments?
+                        .OrderByDescending(p => p.PaymentDate)
+                        .Select(p => new PaymentDto
+                        {
+                            Id = p.Id,
+                            HostelApplicationId =
+                                p.HostelApplicationId,
+                            Amount = p.Amount,
+                            Session = p.Session,
+                            Status = p.Status,
+                            PaymentDate = p.PaymentDate,
+                            TransactionReference =
+                                p.TransactionReference,
+
+                            StudentName =
+                                student.FullName,
+
+                            StudentEmail =
+                                student.Email,
+
+                            RoomNumber =
+                                a.HostelRoom?.RoomNumber
+                                ?? string.Empty
+                        })
+                        .ToList()
+                        ?? new List<PaymentDto>()
+                })
+                .ToList()
+            ?? new List<HostelApplicationDto>(),
+
+        RoomAllocation =
+            allocation == null
+                ? null
+                : new RoomAllocationDto
+                {
+                    Id = allocation.Id,
+                    StudentId = allocation.StudentId,
+                    HostelRoomId = allocation.HostelRoomId,
+                    AllocationDate = allocation.AllocationDate,
+                    IsActive = allocation.IsActive,
+
+                    StudentName = student.FullName,
+                    StudentEmail = student.Email,
+
+                    RoomNumber =
+                        allocation.HostelRoom?.RoomNumber
+                        ?? string.Empty,
+
+                    HostelType =
+                        allocation.HostelRoom?.HostelType
+                        ?? string.Empty,
+
+                    HostelRoom =
+                        allocation.HostelRoom == null
+                            ? null
+                            : new HostelRoomDto
+                            {
+                                Id = allocation.HostelRoom.Id,
+                                RoomNumber =
+                                    allocation.HostelRoom.RoomNumber,
+                                HostelType =
+                                    allocation.HostelRoom.HostelType,
+                                Capacity =
+                                    allocation.HostelRoom.Capacity,
+                                AvailableSpace =
+                                    allocation.HostelRoom.AvailableSpace,
+                                OccupiedSpace =
+                                    allocation.HostelRoom.OccupiedSpace,
+                                IsAvailable =
+                                    allocation.HostelRoom.IsAvailable,
+                                Price =
+                                    allocation.HostelRoom.Price
+                            }
+                }
+    };
+}
     }
 }

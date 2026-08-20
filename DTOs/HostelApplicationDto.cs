@@ -1,5 +1,3 @@
-// DTOs/HostelApplicationDto.cs
-
 namespace HostelManagementSystem.DTOs
 {
     public class HostelApplicationDto
@@ -17,6 +15,9 @@ namespace HostelManagementSystem.DTOs
         public StudentDto? Student { get; set; }
 
         public HostelRoomDto? HostelRoom { get; set; }
+
+        public List<PaymentDto> Payments { get; set; }
+            = new();
 
         public string StudentName =>
             Student?.FullName ?? string.Empty;

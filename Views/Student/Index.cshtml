@@ -140,10 +140,6 @@
 
                 <th>Department</th>
 
-                <th>Room</th>
-
-                <th>Status</th>
-
                 <th class="text-center">Actions</th>
 
             </tr>
@@ -201,58 +197,6 @@
                     </span>
 
                 </td>
-
-
-                <!-- ROOM -->
-                <td>
-
-                    @(student.RoomAllocation?.HostelRoom?.RoomNumber
-                        ?? "Not Allocated")
-
-                </td>
-
-
-                <!-- STATUS -->
-                <td>
-
-                    @if (application != null)
-                    {
-                        if (application.Status == "Accepted")
-                        {
-                            <span class="badge bg-success">
-
-                                Accepted
-
-                            </span>
-                        }
-                        else if (application.Status == "Pending")
-                        {
-                            <span class="badge bg-warning text-dark">
-
-                                Pending
-
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-danger">
-
-                                @application.Status
-
-                            </span>
-                        }
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">
-
-                            No Application
-
-                        </span>
-                    }
-
-                </td>
-
 
                 <!-- ACTIONS -->
                 <td class="text-center">

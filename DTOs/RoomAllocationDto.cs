@@ -1,5 +1,3 @@
-// DTOs/RoomAllocationDto.cs
-
 namespace HostelManagementSystem.DTOs
 {
     public class RoomAllocationDto
@@ -21,5 +19,7 @@ namespace HostelManagementSystem.DTOs
         public string RoomNumber { get; set; } = string.Empty;
 
         public string HostelType { get; set; } = string.Empty;
+
+        public HostelRoomDto? HostelRoom { get; set; }
     }
 }

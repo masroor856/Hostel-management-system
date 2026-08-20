@@ -47,16 +47,16 @@ namespace HostelManagementSystem.Controllers
             return View(data);
         }
 
-        public async Task<IActionResult> Details(int id)
-        {
-            var dto =
-                await _studentService.GetByIdAsync(id);
+public async Task<IActionResult> Details(int id)
+{
+    var dto =
+        await _studentService.GetByIdAsync(id);
 
-            if (dto == null)
-                return NotFound();
+    if (dto == null)
+        return NotFound();
 
-            return View(MapToModel(dto));
-        }
+    return View(dto);
+}
 
         [HttpGet]
         public IActionResult Create()
@@ -173,6 +173,7 @@ namespace HostelManagementSystem.Controllers
                 PhoneNumber = dto.PhoneNumber,
                 Gender = dto.Gender,
                 Department = dto.Department,
+                ProfilePicture = dto.ProfilePicture,
             };
         }
     }

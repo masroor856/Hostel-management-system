@@ -27,32 +27,35 @@ namespace HostelManagementSystem.Repositories
                     .Include(s => s.RoomAllocation)
                         .ThenInclude(r => r.HostelRoom);
 
-            if (!string.IsNullOrWhiteSpace(search))
-            {
-                search = search.Trim();
+           if (!string.IsNullOrWhiteSpace(search))
+{
+    search = search.Trim();
 
-                query = query.Where(s =>
-                    s.FullName.Contains(search) ||
-                    s.Email.Contains(search) ||
-                    s.PhoneNumber.Contains(search) ||
-                    s.Department.Contains(search));
-            }
+    query = query.Where(s =>
+        EF.Functions.Like(s.FullName, $"%{search}%") ||
+        EF.Functions.Like(s.Email, $"%{search}%") ||
+        EF.Functions.Like(s.Department, $"%{search}%"));
+}
 
             return await query
                 .OrderBy(s => s.FullName)
                 .ToListAsync();
         }
 
-        public async Task<Student?> GetByIdAsync(int id)
-        {
-            return await _context.Students
-                .Include(s => s.HostelApplications)
-                    .ThenInclude(a => a.HostelRoom)
-                .Include(s => s.RoomAllocation)
-                    .ThenInclude(r => r.HostelRoom)
-                .FirstOrDefaultAsync(s => s.Id == id);
-        }
+      public async Task<Student?> GetByIdAsync(int id)
+{
+    return await _context.Students
+        .Include(s => s.HostelApplications)
+            .ThenInclude(a => a.HostelRoom)
 
+        .Include(s => s.HostelApplications)
+            .ThenInclude(a => a.Payments)
+
+        .Include(s => s.RoomAllocation)
+            .ThenInclude(r => r.HostelRoom)
+
+        .FirstOrDefaultAsync(s => s.Id == id);
+}
         public async Task<Student?> GetByEmailAsync(
             string email)
         {
