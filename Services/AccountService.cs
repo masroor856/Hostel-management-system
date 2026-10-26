@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace HostelManagementSystem.Services;
 
@@ -18,6 +19,8 @@ public class AccountService : IAccountService
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly ICustomEmailSender _emailSender;
     private readonly ApplicationDbContext _context;
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<AccountService> _logger;
 
     public AccountService(
         IAccountRepository repository,
@@ -25,7 +28,9 @@ public class AccountService : IAccountService
         SignInManager<IdentityUser> signInManager,
         IHttpContextAccessor httpContextAccessor,
         ICustomEmailSender emailSender,
-        ApplicationDbContext context)
+        ApplicationDbContext context,
+        IConfiguration configuration,
+        ILogger<AccountService> logger)
     {
         _repository = repository;
         _userManager = userManager;
@@ -33,6 +38,8 @@ public class AccountService : IAccountService
         _httpContextAccessor = httpContextAccessor;
         _emailSender = emailSender;
         _context = context;
+        _configuration = configuration;
+        _logger = logger;
     }
 
     // ==========================
@@ -72,6 +79,7 @@ public class AccountService : IAccountService
 
     public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
     {
+        
         using var transaction =
             await _context.Database.BeginTransactionAsync();
 
@@ -110,35 +118,40 @@ public class AccountService : IAccountService
 
             return IdentityResult.Success;
         }
-        catch
+        
+catch (Exception ex)
+{
+    _logger.LogError(ex,
+        "Registration or verification email failed for {Email}",
+        dto.Email);
+
+    await transaction.RollbackAsync();
+
+    if (user != null)
+    {
+        var existingUser =
+            await _userManager.FindByEmailAsync(dto.Email);
+
+        if (existingUser != null)
+            await _userManager.DeleteAsync(existingUser);
+    }
+
+    var existingStudent =
+        await _repository.GetStudentByEmailAsync(dto.Email);
+
+    if (existingStudent != null)
+    {
+        _context.Students.Remove(existingStudent);
+        await _context.SaveChangesAsync();
+    }
+
+    return IdentityResult.Failed(
+        new IdentityError
         {
-            await transaction.RollbackAsync();
-
-            if (user != null)
-            {
-                var existingUser =
-                    await _userManager.FindByEmailAsync(dto.Email);
-
-                if (existingUser != null)
-                    await _userManager.DeleteAsync(existingUser);
-            }
-
-            var existingStudent =
-                await _repository.GetStudentByEmailAsync(dto.Email);
-
-            if (existingStudent != null)
-            {
-                _context.Students.Remove(existingStudent);
-                await _context.SaveChangesAsync();
-            }
-
-            return IdentityResult.Failed(
-                new IdentityError
-                {
-                    Description =
-                        "Verification email could not be sent. Please check your internet connection and try again."
-                });
-        }
+            Description =
+                "Verification email could not be sent. Please try again."
+        });
+}
     }
 
     // ==========================
@@ -203,10 +216,18 @@ public class AccountService : IAccountService
         token = WebEncoders.Base64UrlEncode(
             Encoding.UTF8.GetBytes(token));
 
-        var callbackUrl =
-            $"http://localhost:5236/Account/ConfirmEmail" +
-            $"?userId={user.Id}" +
-            $"&code={Uri.EscapeDataString(token)}";
+      var baseUrl = _configuration["APP_BASE_URL"];
+
+if (string.IsNullOrWhiteSpace(baseUrl))
+{
+    throw new InvalidOperationException(
+        "APP_BASE_URL is not configured.");
+}
+
+var callbackUrl =
+    $"{baseUrl.TrimEnd('/')}/Account/ConfirmEmail" +
+    $"?userId={Uri.EscapeDataString(user.Id)}" +
+    $"&code={Uri.EscapeDataString(token)}";
 
         var body = $"""
             <h2>Confirm your Hostel Management account</h2>
