@@ -54,7 +54,7 @@ builder.Services.AddScoped<IHostelRoomRepository, HostelRoomRepository>();
 builder.Services.AddScoped<IHostelRoomService, HostelRoomService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<ICustomEmailSender,SmtpEmailSender>();
+builder.Services.AddHttpClient<ICustomEmailSender, BrevoEmailSender>();
 var app = builder.Build();
 
 using(var scope = app.Services.CreateScope())
