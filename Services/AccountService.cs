@@ -77,82 +77,82 @@ public class AccountService : IAccountService
     // REGISTER (Transactional)
     // ==========================
 
-    public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
-    {
-        
-        using var transaction =
-            await _context.Database.BeginTransactionAsync();
-
-        IdentityUser? user = null;
-
-        try
-        {
-            user = new IdentityUser
-            {
-                UserName = dto.Email,
-                Email = dto.Email
-            };
-
-            var result =
-                await _userManager.CreateAsync(user, dto.Password);
-
-            if (!result.Succeeded)
-                return result;
-
-            var student = new Student
-            {
-                FullName = dto.FullName,
-                Email = dto.Email,
-                PhoneNumber = dto.PhoneNumber,
-                Gender = dto.Gender,
-                Department = dto.Department
-            };
-
-            await _repository.AddStudentAsync(student);
-            await _repository.SaveChangesAsync();
-
-            // This will throw if SMTP/network fails
-            await SendConfirmationEmailAsync(dto.Email);
-
-            await transaction.CommitAsync();
-
-            return IdentityResult.Success;
-        }
-        
-catch (Exception ex)
+public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
 {
-    _logger.LogError(ex,
-        "Registration or verification email failed for {Email}",
-        dto.Email);
+    using var transaction =
+        await _context.Database.BeginTransactionAsync();
 
-    await transaction.RollbackAsync();
+    IdentityUser? user = null;
 
-    if (user != null)
+    try
     {
-        var existingUser =
-            await _userManager.FindByEmailAsync(dto.Email);
-
-        if (existingUser != null)
-            await _userManager.DeleteAsync(existingUser);
-    }
-
-    var existingStudent =
-        await _repository.GetStudentByEmailAsync(dto.Email);
-
-    if (existingStudent != null)
-    {
-        _context.Students.Remove(existingStudent);
-        await _context.SaveChangesAsync();
-    }
-
-    return IdentityResult.Failed(
-        new IdentityError
+        user = new IdentityUser
         {
-            Description =
-                "Verification email could not be sent. Please try again."
-        });
-}
+            UserName = dto.Email,
+            Email = dto.Email
+        };
+
+        var result =
+            await _userManager.CreateAsync(user, dto.Password);
+
+        if (!result.Succeeded)
+            return result;
+
+        var student = new Student
+        {
+            FullName = dto.FullName,
+            Email = dto.Email,
+            PhoneNumber = dto.PhoneNumber,
+            Gender = dto.Gender,
+            Department = dto.Department
+        };
+
+        await _repository.AddStudentAsync(student);
+        await _repository.SaveChangesAsync();
+
+        // Send the verification email.
+        await SendConfirmationEmailAsync(dto.Email);
+
+        await transaction.CommitAsync();
+
+        return IdentityResult.Success;
     }
+    catch (Exception ex)
+    {
+        _logger.LogError(
+            ex,
+            "Registration or verification email failed for {Email}",
+            dto.Email);
+
+        await transaction.RollbackAsync();
+
+        if (user != null)
+        {
+            var existingUser =
+                await _userManager.FindByEmailAsync(dto.Email);
+
+            if (existingUser != null)
+                await _userManager.DeleteAsync(existingUser);
+        }
+
+        var existingStudent =
+            await _repository.GetStudentByEmailAsync(dto.Email);
+
+        if (existingStudent != null)
+        {
+            _context.Students.Remove(existingStudent);
+            await _context.SaveChangesAsync();
+        }
+
+        return IdentityResult.Failed(
+            new IdentityError
+            {
+                Description =
+                    "Verification email could not be sent. Please try again."
+            });
+    }
+}
+
 
     // ==========================
     // EMAIL CONFIRMATION
