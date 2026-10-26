@@ -77,8 +77,10 @@ public class AccountService : IAccountService
     // REGISTER (Transactional)
     // ==========================
 
+
 public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
 {
+    Console.WriteLine("TEST: RegisterAsync method was reached.");
     using var transaction =
         await _context.Database.BeginTransactionAsync();
 
@@ -86,6 +88,8 @@ public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
 
     try
     {
+        Console.WriteLine("REGISTER: Starting registration.");
+
         user = new IdentityUser
         {
             UserName = dto.Email,
@@ -96,7 +100,12 @@ public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
             await _userManager.CreateAsync(user, dto.Password);
 
         if (!result.Succeeded)
+        {
+            Console.WriteLine("REGISTER: User creation failed.");
+
+            await transaction.RollbackAsync();
             return result;
+        }
 
         var student = new Student
         {
@@ -110,38 +119,79 @@ public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
         await _repository.AddStudentAsync(student);
         await _repository.SaveChangesAsync();
 
-        // Send the verification email.
+        Console.WriteLine(
+            "REGISTER: Student saved. About to send confirmation email.");
+
         await SendConfirmationEmailAsync(dto.Email);
 
+        Console.WriteLine(
+            "REGISTER: Confirmation email request succeeded.");
+
         await transaction.CommitAsync();
+
+        Console.WriteLine("REGISTER: Registration completed.");
 
         return IdentityResult.Success;
     }
     catch (Exception ex)
     {
-        _logger.LogError(
-            ex,
-            "Registration or verification email failed for {Email}",
-            dto.Email);
+        Console.Error.WriteLine(
+            $"REGISTER ERROR: {ex}");
 
-        await transaction.RollbackAsync();
+        try
+        {
+            await transaction.RollbackAsync();
+        }
+        catch (Exception rollbackEx)
+        {
+            Console.Error.WriteLine(
+                $"ROLLBACK ERROR: {rollbackEx.Message}");
+        }
 
         if (user != null)
         {
-            var existingUser =
-                await _userManager.FindByEmailAsync(dto.Email);
+            try
+            {
+                var existingUser =
+                    await _userManager.FindByEmailAsync(dto.Email);
 
-            if (existingUser != null)
-                await _userManager.DeleteAsync(existingUser);
+                if (existingUser != null)
+                {
+                    var deleteResult =
+                        await _userManager.DeleteAsync(existingUser);
+
+                    if (!deleteResult.Succeeded)
+                    {
+                        Console.Error.WriteLine(
+                            "USER CLEANUP ERROR: " +
+                            string.Join(
+                                "; ",
+                                deleteResult.Errors.Select(e => e.Description)));
+                    }
+                }
+            }
+            catch (Exception cleanupEx)
+            {
+                Console.Error.WriteLine(
+                    $"USER CLEANUP ERROR: {cleanupEx.Message}");
+            }
         }
 
-        var existingStudent =
-            await _repository.GetStudentByEmailAsync(dto.Email);
-
-        if (existingStudent != null)
+        try
         {
-            _context.Students.Remove(existingStudent);
-            await _context.SaveChangesAsync();
+            var existingStudent =
+                await _repository.GetStudentByEmailAsync(dto.Email);
+
+            if (existingStudent != null)
+            {
+                _context.Students.Remove(existingStudent);
+                await _context.SaveChangesAsync();
+            }
+        }
+        catch (Exception cleanupEx)
+        {
+            Console.Error.WriteLine(
+                $"STUDENT CLEANUP ERROR: {cleanupEx.Message}");
         }
 
         return IdentityResult.Failed(
@@ -152,6 +202,7 @@ public async Task<IdentityResult> RegisterAsync(RegisterDto dto)
             });
     }
 }
+
 
 
     // ==========================

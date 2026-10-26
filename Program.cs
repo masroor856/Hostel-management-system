@@ -9,17 +9,67 @@ using Microsoft.Extensions.Options;
 using HostelManagementSystem.Settings;
 using HostelManagementSystem.Implementation;
 using HostelManagementSystem.Repositories;
+using Npgsql;
 
 
+
+
+using HostelManagementSystem.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine(
+    $"APP_BASE_URL loaded: {builder.Configuration["APP_BASE_URL"] ?? "MISSING"}");
+
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+// Read the configured database connection string.
+var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection");
 
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "The DefaultConnection database connection string is missing.");
+}
+
+// Convert Render's PostgreSQL URL into an Npgsql connection string.
+if (connectionString.StartsWith(
+        "postgresql://", StringComparison.OrdinalIgnoreCase) ||
+    connectionString.StartsWith(
+        "postgres://", StringComparison.OrdinalIgnoreCase))
+{
+    var databaseUri = new Uri(connectionString);
+    var userInfo = databaseUri.UserInfo.Split(':', 2);
+
+    if (userInfo.Length != 2)
+    {
+        throw new InvalidOperationException(
+            "The PostgreSQL URL has an invalid username/password section.");
+    }
+
+    var connectionBuilder = new NpgsqlConnectionStringBuilder
+    {
+        Host = databaseUri.Host,
+        Port = databaseUri.Port > 0 ? databaseUri.Port : 5432,
+        Database = Uri.UnescapeDataString(
+            databaseUri.AbsolutePath.TrimStart('/')),
+        Username = Uri.UnescapeDataString(userInfo[0]),
+        Password = Uri.UnescapeDataString(userInfo[1]),
+        SslMode = SslMode.Require
+    };
+
+    connectionString = connectionBuilder.ConnectionString;
+}
+
+// Configure Entity Framework Core to use PostgreSQL.
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+// Configure ASP.NET Core Identity.
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     {
         options.SignIn.RequireConfirmedEmail = true;

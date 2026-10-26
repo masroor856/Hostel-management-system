@@ -4,3 +4,18 @@ obj/
 .vs/
 *.user
 *.suo
+# Build output
+bin/
+obj/
+
+# Local database
+HostelManagement.db
+*.db-shm
+*.db-wal
+
+# Temporary helper and SQLite backup
+DbConnectionHelper/
+Migrations-SQLite-Backup/
+
+# Local development settings
+appsettings.Development.json
